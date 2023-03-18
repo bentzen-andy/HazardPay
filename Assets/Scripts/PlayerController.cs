@@ -7,6 +7,15 @@ public class PlayerController : MonoBehaviour {
     private float speed = 5f;
     [SerializeField]
     private float lookSensitivity = 3f;
+    [SerializeField]
+    private float jumpForce = 3000f;
+
+    private bool canJump;
+    [SerializeField]
+    private Transform groundCheckPoint;
+    [SerializeField]
+    private LayerMask whatIsGround;
+
 
     private PlayerMotor motor;
     
@@ -14,6 +23,7 @@ public class PlayerController : MonoBehaviour {
     private void Start() {
         motor = GetComponent<PlayerMotor>();
     }
+
 
     private void Update() {
         // calculate movement velocity as a 3D vector 
@@ -42,7 +52,19 @@ public class PlayerController : MonoBehaviour {
 
         // apply camera rotation
         motor.RotateCamera(cameraRotationX);
-
+	
+	// calculate the jump force based on player input
+	Vector3 _jumpForce = Vector3.zero;
+	canJump = Physics.OverlapSphere(groundCheckPoint.position, 0.25f, whatIsGround).Length > 0;
+	if (canJump && Input.GetButton("Jump")) {
+	    _jumpForce = Vector3.up * jumpForce;
+	} else {
+	    _jumpForce = Vector3.zero;
+	}
+	
+	// Apply the jump force
+	motor.ApplyJump(_jumpForce);
+	
     }
 
 }
