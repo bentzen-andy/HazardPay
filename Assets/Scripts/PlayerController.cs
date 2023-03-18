@@ -6,16 +6,20 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
+    private float runSpeed = 12f;
+    [SerializeField]
     private float lookSensitivity = 3f;
     [SerializeField]
     private float jumpForce = 3000f;
 
-    private bool canJump;
+    private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
     [SerializeField]
     private Transform groundCheckPoint;
     [SerializeField]
     private LayerMask whatIsGround;
 
+    [SerializeField]
+    private Animator anim;
 
     private PlayerMotor motor;
     
@@ -33,8 +37,14 @@ public class PlayerController : MonoBehaviour {
         Vector3 movHorizontal = transform.right * xMov;
         Vector3 movVertical = transform.forward * zMov;
         
-        // final movement vector 
-        Vector3 velocity = (movHorizontal + movVertical).normalized * speed;
+        // final movement vector
+	float _speed = speed;
+	if (Input.GetKey(KeyCode.LeftShift)) _speed = runSpeed;
+        Vector3 velocity = (movHorizontal + movVertical).normalized * _speed;
+
+	// apply movement animation
+	anim.SetFloat("moveSpeed", movHorizontal.magnitude + movVertical.magnitude);
+	anim.SetBool("onGround", canJump);
 
         // apply movement 
         motor.Move(velocity);
@@ -55,15 +65,13 @@ public class PlayerController : MonoBehaviour {
 	
 	// calculate the jump force based on player input
 	Vector3 _jumpForce = Vector3.zero;
-	canJump = Physics.OverlapSphere(groundCheckPoint.position, 0.25f, whatIsGround).Length > 0;
 	if (canJump && Input.GetButton("Jump")) {
 	    _jumpForce = Vector3.up * jumpForce;
-	} else {
-	    _jumpForce = Vector3.zero;
 	}
-	
+
 	// Apply the jump force
 	motor.ApplyJump(_jumpForce);
+
 	
     }
 

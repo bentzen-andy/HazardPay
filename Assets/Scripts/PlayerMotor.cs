@@ -45,9 +45,6 @@ public class PlayerMotor : MonoBehaviour {
 
     // Runs every physics iteration 
     private void FixedUpdate() {
-
-        Debug.Log("cam.transform.rotation.eulerAngles: " + cam.transform.rotation.eulerAngles);
-
         PerformMovement();
         PerformRotation();
     }
