@@ -76,3 +76,6 @@ crashlytics-build.properties
 
 # emacs temp files
 *~*
+
+# build folders
+/build*/*
