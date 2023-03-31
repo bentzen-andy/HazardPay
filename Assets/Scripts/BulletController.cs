@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float lifetime = 5.0f;
+    [SerializeField] private GameObject impactEffect;
 
     // Start is called before the first frame update
     void Start() {
@@ -26,5 +27,6 @@ public class BulletController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 	Destroy(gameObject);
+	Instantiate(impactEffect, transform.position, transform.rotation);
     }
 }
