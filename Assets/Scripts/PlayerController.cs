@@ -68,6 +68,17 @@ public class PlayerController : MonoBehaviour {
 
 	// Handle shooting
 	if (Input.GetMouseButtonDown(0)) { // right click
+	    Camera cam = motor.getCamera();
+	    RaycastHit hit;
+	    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 50.0f)) {
+		if (Vector3.Distance(cam.transform.position, hit.point) > 2.0f) {
+		    firePoint.LookAt(hit.point);
+		}
+	    } else {
+		firePoint.LookAt(cam.transform.position + (cam.transform.forward*30.0f));
+	    }
+
+
 	    Instantiate(projectile, firePoint.position, firePoint.rotation);
 	}
     }

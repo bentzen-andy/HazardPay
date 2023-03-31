@@ -15,6 +15,11 @@ public class PlayerMotor : MonoBehaviour {
 
     private Rigidbody rb;
 
+
+    public Camera getCamera() {
+	return cam;
+    }
+
     private void Start() {
         rb = GetComponent<Rigidbody>();
     }
