@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-    [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
-    private Rigidbody rb;
-
-    [SerializeField]
-    private float lifetime = 5.0f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float lifetime = 5.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -27,7 +23,7 @@ public class BulletController : MonoBehaviour {
 	if (lifetime <= 0.0f) Destroy(gameObject);
     }
 
-    
+
     private void OnTriggerEnter(Collider other) {
 	Destroy(gameObject);
     }

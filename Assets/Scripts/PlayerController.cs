@@ -3,26 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField]
-    private float speed = 5f;
-    [SerializeField]
-    private float runSpeed = 12f;
-    [SerializeField]
-    private float lookSensitivity = 3f;
-    [SerializeField]
-    private float jumpForce = 3000f;
-
-    private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
-    [SerializeField]
-    private Transform groundCheckPoint;
-    [SerializeField]
-    private LayerMask whatIsGround;
-
-    [SerializeField]
-    private Animator anim;
-
-    private PlayerMotor motor;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float runSpeed = 12f;
+    [SerializeField] private float lookSensitivity = 3f;
+    [SerializeField] private float jumpForce = 3000f;
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform firePoint;
     
+    private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
+    private PlayerMotor motor;
+
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
@@ -72,8 +65,11 @@ public class PlayerController : MonoBehaviour {
 	// Apply the jump force
 	motor.ApplyJump(_jumpForce);
 
-	
-    }
 
+	// Handle shooting
+	if (Input.GetMouseButtonDown(0)) { // right click
+	    Instantiate(projectile, firePoint.position, firePoint.rotation);
+	}
+    }
 }
 
