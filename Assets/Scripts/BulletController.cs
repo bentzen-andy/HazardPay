@@ -31,12 +31,11 @@ public class BulletController : MonoBehaviour {
 	if (other.gameObject.tag == "Enemy") {
 	    GameObject obj = other.gameObject;
 	    EnemyHealthController controller = obj.GetComponent<EnemyHealthController>();
-	    controller.DamageEnemy(baseBulletDamage); 
-	} else if (other.gameObject.tag == "Target") {
-	    Destroy(other.gameObject);
+	    controller.DamageEnemy(baseBulletDamage);
 	}
 
 	Destroy(gameObject);
+
 	Instantiate(impactEffect,
 		    transform.position + transform.forward*(-moveSpeed*Time.deltaTime),
 		    transform.rotation);
