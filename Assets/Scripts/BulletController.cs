@@ -8,6 +8,8 @@ public class BulletController : MonoBehaviour {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float lifetime = 5.0f;
     [SerializeField] private GameObject impactEffect;
+    [SerializeField] private int baseBulletDamage = 20;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -27,8 +29,13 @@ public class BulletController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 	if (other.gameObject.tag == "Enemy") {
+	    GameObject obj = other.gameObject;
+	    EnemyHealthController controller = obj.GetComponent<EnemyHealthController>();
+	    controller.DamageEnemy(baseBulletDamage); 
+	} else if (other.gameObject.tag == "Target") {
 	    Destroy(other.gameObject);
 	}
+
 	Destroy(gameObject);
 	Instantiate(impactEffect,
 		    transform.position + transform.forward*(-moveSpeed*Time.deltaTime),
