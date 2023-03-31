@@ -7,11 +7,15 @@ public class EnemyController : MonoBehaviour {
 
     private bool isChasing;
     private bool isFighting;
+    private bool isReloading;
     private Vector3 spawnPos;
+
     [SerializeField] private float distanceToFight = 5f;
     [SerializeField] private float distanceToChase = 10f;
-    [SerializeField] private float distanceToStopChase = 15f;
+    [SerializeField] private float distanceToReturnToBase = 15f;
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform firePoint;
 
 
     private void Awake() {
@@ -32,7 +36,7 @@ public class EnemyController : MonoBehaviour {
 	else if (isChasing) ChasePlayer(playerPos);
 	else if (!isChasing) agent.destination = spawnPos;
 
-	if       (isChasing && distToPlayer > distanceToStopChase) isChasing = false;
+	if (isChasing && distToPlayer > distanceToReturnToBase) isChasing = false;
 	else if (!isChasing && distToPlayer < distanceToChase) isChasing = true;
 
 	if (distToPlayer < distanceToFight) isFighting = true;
@@ -40,12 +44,29 @@ public class EnemyController : MonoBehaviour {
     }
 
 
-
     private void ChasePlayer(Vector3 playerPos) {
 	agent.destination = playerPos;
+	if (!isReloading) Shoot();
     }
+
 
     private void FightPlayer(Vector3 playerPos) {
 	agent.destination = transform.position;
+        transform.LookAt(playerPos);
+	if (!isReloading) Shoot();
     }
+
+
+    private void Shoot() {
+	// TODO: improve this by checking a ray trace before firing.
+	Instantiate(projectile, firePoint.position, firePoint.rotation);
+	isReloading = true;
+	StartCoroutine(Reload());
+    }
+
+    private IEnumerator Reload() {
+	yield return new WaitForSeconds(1f);
+	isReloading = false;
+    }
+
 }

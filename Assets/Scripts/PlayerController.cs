@@ -84,9 +84,13 @@ public class PlayerController : MonoBehaviour {
 		firePoint.LookAt(cam.transform.position + (cam.transform.forward*30.0f));
 	    }
 
-
-	    Instantiate(projectile, firePoint.position, firePoint.rotation);
+	    Shoot();
 	}
+    }
+
+
+    private void Shoot() {
+	Instantiate(projectile, firePoint.position, firePoint.rotation);
     }
 }
 

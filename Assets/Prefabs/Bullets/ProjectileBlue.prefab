@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1383288019125590101}
   - component: {fileID: 3846558410523531732}
   m_Layer: 9
-  m_Name: Projectile
+  m_Name: ProjectileBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,6 +132,9 @@ MonoBehaviour:
   rb: {fileID: 1383288019125590098}
   lifetime: 5
   impactEffect: {fileID: 5005980263764266902, guid: bf616077c5ef2184f8ca6db887c2ac91, type: 3}
+  baseBulletDamage: 20
+  allowedToDamagePlayer: 0
+  allowedToDamageEnemy: 1
 --- !u!96 &3846558410523531732
 TrailRenderer:
   serializedVersion: 2

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5328743727477293880}
   - component: {fileID: 5543116585216467818}
   m_Layer: 0
-  m_Name: BulletSplashEffect
+  m_Name: BulletSplashEffectBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
