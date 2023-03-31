@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour {
 
+    private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
+    private PlayerMotor motor;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
     [SerializeField] private float lookSensitivity = 3f;
@@ -13,8 +15,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
     
-    private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
-    private PlayerMotor motor;
 
     public static PlayerController instance;
 
