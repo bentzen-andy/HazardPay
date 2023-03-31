@@ -27,6 +27,8 @@ public class BulletController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 	Destroy(gameObject);
-	Instantiate(impactEffect, transform.position, transform.rotation);
+	Instantiate(impactEffect,
+		    transform.position + transform.forward*(-moveSpeed*Time.deltaTime),
+		    transform.rotation);
     }
 }
