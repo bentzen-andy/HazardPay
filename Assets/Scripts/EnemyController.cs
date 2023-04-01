@@ -8,7 +8,10 @@ public class EnemyController : MonoBehaviour {
     private bool isChasing;
     private bool isFighting;
     private bool isReloading;
+    private bool isAlerted;
+    private bool isPausingToShoot;
     private Vector3 spawnPos;
+    private int numRoundsInMagazine = 6;
 
     [SerializeField] private float distanceToFight = 5f;
     [SerializeField] private float distanceToChase = 10f;
@@ -16,6 +19,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private int maxMagazineSize = 6;
 
 
     private void Awake() {
@@ -34,39 +38,77 @@ public class EnemyController : MonoBehaviour {
 
 	if (isFighting) FightPlayer(playerPos);
 	else if (isChasing) ChasePlayer(playerPos);
-	else if (!isChasing) agent.destination = spawnPos;
+	else if (!isChasing) Unalert();
 
 	if (isChasing && distToPlayer > distanceToReturnToBase) isChasing = false;
 	else if (!isChasing && distToPlayer < distanceToChase) isChasing = true;
-
-	if (distToPlayer < distanceToFight) isFighting = true;
+	else if (distToPlayer < distanceToFight) isFighting = true;
 	else isFighting = false;
     }
 
 
     private void ChasePlayer(Vector3 playerPos) {
-	agent.destination = playerPos;
-	if (!isReloading) Shoot();
+	Alert();
+	if (!isPausingToShoot) agent.destination = playerPos;
+	Shoot(playerPos);
     }
 
 
     private void FightPlayer(Vector3 playerPos) {
+	Alert();
 	agent.destination = transform.position;
-        transform.LookAt(playerPos);
-	if (!isReloading) Shoot();
+	Shoot(playerPos);
     }
 
 
-    private void Shoot() {
+    private void Alert() {
+	if (!isAlerted) StartCoroutine(ReloadNewRound());
+	isAlerted = true;
+    }
+
+
+    private void Unalert() {
+	isAlerted = false;
+	if (!isPausingToShoot) agent.destination = spawnPos;
+    }
+
+
+    private void Shoot(Vector3 playerPos) {
 	// TODO: improve this by checking a ray trace before firing.
+	if (isReloading) return;
+	if (numRoundsInMagazine <= 0) return;
+
+	StartCoroutine(PauseToShoot());
+        transform.LookAt(playerPos);
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
-	isReloading = true;
-	StartCoroutine(Reload());
+	numRoundsInMagazine--;
+
+	if (numRoundsInMagazine <= 0) StartCoroutine(ReloadNewMagazine());
+	else StartCoroutine(ReloadNewRound());
     }
 
-    private IEnumerator Reload() {
-	yield return new WaitForSeconds(1f);
+
+    private IEnumerator PauseToShoot() {
+	isPausingToShoot = true;
+	agent.destination = transform.position;
+	float rand = Random.Range(0.75f, 1.0f);
+	yield return new WaitForSeconds(rand);
+	isPausingToShoot = false;
+    }
+
+
+    private IEnumerator ReloadNewRound() {
+	isReloading = true;
+	float rand = Random.Range(0.15f, 0.2f);
+	yield return new WaitForSeconds(rand);
 	isReloading = false;
+    }
+
+
+    private IEnumerator ReloadNewMagazine() {
+	float rand = Random.Range(3.0f, 5.0f);
+	yield return new WaitForSeconds(rand);
+	numRoundsInMagazine = maxMagazineSize;
     }
 
 }
