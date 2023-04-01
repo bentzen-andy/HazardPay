@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 	    Camera cam = motor.getCamera();
 	    RaycastHit hit;
 	    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 50.0f)) {
-		if (Vector3.Distance(cam.transform.position, hit.point) > 2.0f) {
+		if (Vector3.Distance(cam.transform.position, hit.point) > 0.1f) {
 		    firePoint.LookAt(hit.point);
 		}
 	    } else {

@@ -33,7 +33,10 @@ public class BulletController : MonoBehaviour {
 	if (allowedToDamageEnemy && other.gameObject.tag == "Enemy") {
 	    GameObject obj = other.gameObject;
 	    EnemyHealthController controller = obj.GetComponent<EnemyHealthController>();
-	    controller.DamageEnemy(baseBulletDamage);
+											   
+	    if (other == controller.head) controller.DamageEnemyHeadshot(baseBulletDamage);
+	    else if (other == controller.body) controller.DamageEnemy(baseBulletDamage);
+	    else controller.DamageEnemy(baseBulletDamage);
 	}
 
 	if (allowedToDamagePlayer && other.gameObject.tag == "Player") {

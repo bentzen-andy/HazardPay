@@ -8,7 +8,6 @@ public class EnemyController : MonoBehaviour {
     private bool isPausingBetweenShots;
     private bool isPausingToReload;
     private bool isStandingStill;
-    private bool isCloseToPlayer;
     private bool isInCombat;
     private bool isTurning;
     private bool playerIsInLineOfSight;
@@ -24,6 +23,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private int maxMagazineSize = 2;
     [SerializeField] private float pauseTimeToShoot = 0.3f;
     [SerializeField] private float pauseTimeToReload = 6.0f;
+    [SerializeField] private Animator anim;
 
 
     private void Awake() {
@@ -40,16 +40,15 @@ public class EnemyController : MonoBehaviour {
 	bool enemyDidShoot = Shoot(playerPos);
 	Reload();
 	SetEnemyState(playerPos, distToPlayer, enemyDidShoot);
+	SetAnimState(enemyDidShoot);
     }
 
 
     private void Move(Vector3 playerPos) {
-	if (isStandingStill || isCloseToPlayer) agent.destination = transform.position;
+	if (isStandingStill) agent.destination = transform.position;
 	else if (isInCombat) agent.destination = playerPos;
 	else agent.destination = spawnPos;
-
 	//if (!isTurning) TurnDirection(transform.forward, playerPos);
-	
     }
 
 
@@ -79,12 +78,10 @@ public class EnemyController : MonoBehaviour {
 	// Set state based on distance from the player
 	if (isInCombat && distToPlayer > distanceToReturnToBase) isInCombat = false;
 	else if (!isInCombat && distToPlayer < distanceToChase) isInCombat = true;
-	else if (distToPlayer < distanceToFight) isCloseToPlayer = true;
-	else if (distToPlayer > distanceToFight) isCloseToPlayer = false;
-
+	else if (distToPlayer < distanceToFight) isStandingStill = true;
+	else if (distToPlayer > distanceToFight) isStandingStill = false;
 
 	// Check if the player is in the enemy's line of sight
-	
 	RaycastHit hit;
 	if (Physics.Raycast(transform.position, transform.forward, out hit, 50.0f) &&
 	    hit.collider.gameObject == PlayerController.instance.gameObject) {
@@ -94,10 +91,22 @@ public class EnemyController : MonoBehaviour {
 	    playerIsInLineOfSight = false;
 	}
 
-
 	// Set state based on whether enemy did shoot in this frame
 	if (enemyDidShoot) StartCoroutine(StandStillToShoot());
 	if (enemyDidShoot) StartCoroutine(PauseBetweenShots());
+    }
+
+
+    private void SetAnimState(bool enemyDidShoot) {
+	if (enemyDidShoot) anim.SetTrigger("fireShot");
+	
+	if (agent.isStopped) anim.SetBool("isMoving", false);
+	else anim.SetBool("isMoving", true);
+
+	if (agent.remainingDistance < 0.25) anim.SetBool("isMoving", false);
+	else anim.SetBool("isMoving", true);
+
+	Debug.Log(agent.remainingDistance);
     }
 
 

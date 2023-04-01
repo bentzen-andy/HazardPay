@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyHealthController : MonoBehaviour {
 
     [SerializeField] private int currentHealth = 100;
+    public CapsuleCollider head;
+    public CapsuleCollider body;
     
 
     // Start is called before the first frame update
@@ -22,5 +24,10 @@ public class EnemyHealthController : MonoBehaviour {
 
     public void DamageEnemy(int damageAmount) {
 	currentHealth -= damageAmount;
+    }
+
+
+    public void DamageEnemyHeadshot(int damageAmount) {
+	currentHealth -= damageAmount*2;
     }
 }
