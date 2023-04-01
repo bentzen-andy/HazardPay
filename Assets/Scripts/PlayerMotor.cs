@@ -2,6 +2,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
+    private bool isFrozen;
+
     [SerializeField] private Camera cam;
     [SerializeField] private float cameraRotationLimit = 85f;
 
@@ -47,6 +49,7 @@ public class PlayerMotor : MonoBehaviour {
 
     // Runs every physics iteration 
     private void FixedUpdate() {
+	if (isFrozen) return;
         PerformMovement();
         PerformRotation();
     }
@@ -74,6 +77,10 @@ public class PlayerMotor : MonoBehaviour {
             //Apply our rotation to the transform of our camera
             cam.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
         }
+    }
+
+    public void Freeze() {
+	isFrozen = true;
     }
 
 }

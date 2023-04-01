@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerHealthController : MonoBehaviour {
 
     private bool isInvincible;
-    
+    private bool isWaitingToRespawn;
+    private bool isDead;
+
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private float invincibleTime = 0.5f;
 
     public static PlayerHealthController instance;
     
@@ -16,32 +19,55 @@ public class PlayerHealthController : MonoBehaviour {
     void Start() {
         instance = this;
 	currentHealth = maxHealth;
+	UIController.instance.healthSlider.maxValue = maxHealth;
+	UpdateHealthBarText();
+
     }
 
     // Update is called once per frame
     void Update() {
-	//Debug.Log(isInvincible);
     }
 
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
 	currentHealth  -= damageAmount;
-	if (currentHealth <= 0) gameObject.SetActive(false);
-	Debug.Log("before");
-	StartCoroutine(MakeInvinsibleForSeconds(1f));
-	Debug.Log("after");
+	UpdateHealthBarText();
+	if (currentHealth <= 0) {
+	    StartCoroutine(PlayerDiesAndWaitToRespawn(4f));
+	    return;
+	}
+	StartCoroutine(MakeInvinsibleForSeconds(invincibleTime));
+    }
+
+
+    private IEnumerator PlayerDiesAndWaitToRespawn(float seconds) {
+	if (isWaitingToRespawn) yield break;
+	isDead = true;
+        isWaitingToRespawn = true;
+	PlayerController.instance.FreezeMovement();
+	yield return new WaitForSeconds(seconds);
+
+	//gameObject.SetActive(false);
+	GameManager.instance.ReloadScene();
+        isWaitingToRespawn = false;
     }
 
 
     private IEnumerator MakeInvinsibleForSeconds(float seconds) {
-	Debug.Log("durring");
-	Debug.Log(isInvincible);
 	if (isInvincible) yield break;
         isInvincible = true;
-	Debug.Log(isInvincible);
 	yield return new WaitForSeconds(seconds);
         isInvincible = false;
-	Debug.Log(isInvincible);
+    }
+
+    private void UpdateHealthBarText() {
+	int health = Mathf.Max(currentHealth, 0);
+	UIController.instance.healthSlider.value = health;
+	UIController.instance.healthText.text = $"HEALTH: {health}/{maxHealth}";
+    }
+
+    public bool PlayerIsDead() {
+	return isDead;
     }
 
 }

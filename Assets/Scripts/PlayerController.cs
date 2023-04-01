@@ -92,5 +92,10 @@ public class PlayerController : MonoBehaviour {
     private void Shoot() {
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
     }
+
+    public void FreezeMovement() {
+	anim.SetBool("isDead", true);
+	motor.Freeze();
+    }
 }
 

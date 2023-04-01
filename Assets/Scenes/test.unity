@@ -754,8 +754,8 @@ MonoBehaviour:
   projectile: {fileID: 2259971543493857872, guid: e758664b8e1ae1442b0cad71dcc6b784, type: 3}
   firePoint: {fileID: 1489637653}
   maxMagazineSize: 6
-  pauseTimeToShoot: 0.25
-  pauseTimeToReload: 4
+  pauseTimeToShoot: 0.07
+  pauseTimeToReload: 0.85
   anim: {fileID: 100826115}
 --- !u!114 &163647742
 MonoBehaviour:
@@ -1093,6 +1093,7 @@ GameObject:
   - component: {fileID: 254093624}
   - component: {fileID: 254093623}
   - component: {fileID: 254093627}
+  - component: {fileID: 254093628}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1205,6 +1206,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &254093628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254093622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63d2c58a28e59649b8e322756d1b8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 1819218415}
+  healthText: {fileID: 1797197842}
 --- !u!1 &279574358
 GameObject:
   m_ObjectHideFlags: 0
@@ -4125,7 +4140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 48
+  invincibleTime: 0.5
 --- !u!1 &2056919443
 GameObject:
   m_ObjectHideFlags: 0
