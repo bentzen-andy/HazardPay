@@ -106,7 +106,7 @@ public class EnemyController : MonoBehaviour {
 	if (agent.remainingDistance < 0.25) anim.SetBool("isMoving", false);
 	else anim.SetBool("isMoving", true);
 
-	Debug.Log(agent.remainingDistance);
+	//Debug.Log(agent.remainingDistance);
     }
 
 
