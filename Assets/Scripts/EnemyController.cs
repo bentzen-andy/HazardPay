@@ -5,13 +5,13 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
-    private bool isChasing;
-    private bool isFighting;
-    private bool isReloading;
-    private bool isAlerted;
-    private bool isPausingToShoot;
+    private bool isPausingBetweenShots;
+    private bool isPausingToReload;
+    private bool isStandingStill;
+    private bool isCloseToPlayer;
+    private bool isInCombat;
     private Vector3 spawnPos;
-    private int numRoundsInMagazine = 6;
+    private int numRoundsInMagazine = 0;
 
     [SerializeField] private float distanceToFight = 5f;
     [SerializeField] private float distanceToChase = 10f;
@@ -19,96 +19,89 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private int maxMagazineSize = 6;
+    [SerializeField] private int maxMagazineSize = 2;
+    [SerializeField] private float pauseTimeToShoot = 0.3f;
+    [SerializeField] private float pauseTimeToReload = 6.0f;
 
 
     private void Awake() {
 	spawnPos = transform.position;
     }
 
-    // Start is called before the first frame update
-    void Start() {
-        
-    }
 
     // Update is called once per frame
     void Update() {
 	Vector3 playerPos = PlayerController.instance.transform.position;
 	float distToPlayer = Vector3.Distance(transform.position, playerPos);
 
-	if (isFighting) FightPlayer(playerPos);
-	else if (isChasing) ChasePlayer(playerPos);
-	else if (!isChasing) Unalert();
-
-	if (isChasing && distToPlayer > distanceToReturnToBase) isChasing = false;
-	else if (!isChasing && distToPlayer < distanceToChase) isChasing = true;
-	else if (distToPlayer < distanceToFight) isFighting = true;
-	else isFighting = false;
+	Move(playerPos);
+	bool enemyDidShoot = Shoot(playerPos);
+	Reload();
+	SetEnemyState(distToPlayer, enemyDidShoot);
     }
 
 
-    private void ChasePlayer(Vector3 playerPos) {
-	Alert();
-	if (!isPausingToShoot) agent.destination = playerPos;
-	Shoot(playerPos);
+    private void Move(Vector3 playerPos) {
+	if (isStandingStill || isCloseToPlayer) agent.destination = transform.position;
+	else if (isInCombat) agent.destination = playerPos;
+	else agent.destination = spawnPos;
     }
 
 
-    private void FightPlayer(Vector3 playerPos) {
-	Alert();
-	agent.destination = transform.position;
-	Shoot(playerPos);
-    }
+    private bool Shoot(Vector3 playerPos) {
+	if (isPausingBetweenShots) return false;
+	if (isPausingToReload) return false;
+	if (numRoundsInMagazine <= 0) return false;
 
-
-    private void Alert() {
-	if (!isAlerted) StartCoroutine(ReloadNewRound());
-	isAlerted = true;
-    }
-
-
-    private void Unalert() {
-	isAlerted = false;
-	if (!isPausingToShoot) agent.destination = spawnPos;
-    }
-
-
-    private void Shoot(Vector3 playerPos) {
-	// TODO: improve this by checking a ray trace before firing.
-	if (isReloading) return;
-	if (numRoundsInMagazine <= 0) return;
-
-	StartCoroutine(PauseToShoot());
         transform.LookAt(playerPos);
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
 	numRoundsInMagazine--;
-
-	if (numRoundsInMagazine <= 0) StartCoroutine(ReloadNewMagazine());
-	else StartCoroutine(ReloadNewRound());
+	return true;
     }
 
 
-    private IEnumerator PauseToShoot() {
-	isPausingToShoot = true;
-	agent.destination = transform.position;
+    private void Reload() {
+	if (isPausingToReload) return;
+	if (numRoundsInMagazine <= 0) StartCoroutine(PauseToReload());
+    }
+
+
+    private void SetEnemyState(float distToPlayer, bool enemyDidShoot) {
+	// Set state based on distance from the player
+	if (isInCombat && distToPlayer > distanceToReturnToBase) isInCombat = false;
+	else if (!isInCombat && distToPlayer < distanceToChase) isInCombat = true;
+	else if (distToPlayer < distanceToFight) isCloseToPlayer = true;
+	else if (distToPlayer > distanceToFight) isCloseToPlayer = false;
+
+	// Set state based on whether enemy did shoot in this frame
+	if (enemyDidShoot) StartCoroutine(StandStillToShoot());
+	if (enemyDidShoot) StartCoroutine(PauseBetweenShots());
+    }
+
+
+    private IEnumerator StandStillToShoot() {
+	isStandingStill = true;
 	float rand = Random.Range(0.75f, 1.0f);
 	yield return new WaitForSeconds(rand);
-	isPausingToShoot = false;
+	isStandingStill = false;
     }
 
 
-    private IEnumerator ReloadNewRound() {
-	isReloading = true;
-	float rand = Random.Range(0.15f, 0.2f);
+    private IEnumerator PauseBetweenShots() {
+	isPausingBetweenShots = true;
+	float rand = Random.Range(pauseTimeToShoot - pauseTimeToShoot/4,
+				  pauseTimeToShoot + pauseTimeToShoot/4);
 	yield return new WaitForSeconds(rand);
-	isReloading = false;
+	isPausingBetweenShots = false;
     }
 
 
-    private IEnumerator ReloadNewMagazine() {
-	float rand = Random.Range(3.0f, 5.0f);
+    private IEnumerator PauseToReload() {
+	isPausingToReload = true;
+	float rand = Random.Range(pauseTimeToReload - pauseTimeToReload/4,
+				  pauseTimeToReload + pauseTimeToReload/4);
 	yield return new WaitForSeconds(rand);
+	isPausingToReload = false;
 	numRoundsInMagazine = maxMagazineSize;
     }
-
 }

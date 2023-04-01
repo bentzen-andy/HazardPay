@@ -669,6 +669,8 @@ MonoBehaviour:
   projectile: {fileID: 2259971543493857872, guid: e758664b8e1ae1442b0cad71dcc6b784, type: 3}
   firePoint: {fileID: 1489637653}
   maxMagazineSize: 6
+  pauseTimeToShoot: 0.25
+  pauseTimeToReload: 4
 --- !u!114 &163647742
 MonoBehaviour:
   m_ObjectHideFlags: 0
