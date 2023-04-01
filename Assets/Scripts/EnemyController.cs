@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour {
     private bool isStandingStill;
     private bool isCloseToPlayer;
     private bool isInCombat;
+    private bool isTurning;
+    private bool playerIsInLineOfSight;
     private Vector3 spawnPos;
     private int numRoundsInMagazine = 0;
 
@@ -37,7 +39,7 @@ public class EnemyController : MonoBehaviour {
 	Move(playerPos);
 	bool enemyDidShoot = Shoot(playerPos);
 	Reload();
-	SetEnemyState(distToPlayer, enemyDidShoot);
+	SetEnemyState(playerPos, distToPlayer, enemyDidShoot);
     }
 
 
@@ -45,6 +47,9 @@ public class EnemyController : MonoBehaviour {
 	if (isStandingStill || isCloseToPlayer) agent.destination = transform.position;
 	else if (isInCombat) agent.destination = playerPos;
 	else agent.destination = spawnPos;
+
+	//if (!isTurning) TurnDirection(transform.forward, playerPos);
+	
     }
 
 
@@ -53,7 +58,11 @@ public class EnemyController : MonoBehaviour {
 	if (isPausingToReload) return false;
 	if (numRoundsInMagazine <= 0) return false;
 
+	// FIXME: change this so that the enemey gradually turns
         transform.LookAt(playerPos);
+	if (!playerIsInLineOfSight) return false;
+
+        //firePoint.transform.LookAt(playerPos);
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
 	numRoundsInMagazine--;
 	return true;
@@ -66,12 +75,25 @@ public class EnemyController : MonoBehaviour {
     }
 
 
-    private void SetEnemyState(float distToPlayer, bool enemyDidShoot) {
+    private void SetEnemyState(Vector3 playerPos, float distToPlayer, bool enemyDidShoot) {
 	// Set state based on distance from the player
 	if (isInCombat && distToPlayer > distanceToReturnToBase) isInCombat = false;
 	else if (!isInCombat && distToPlayer < distanceToChase) isInCombat = true;
 	else if (distToPlayer < distanceToFight) isCloseToPlayer = true;
 	else if (distToPlayer > distanceToFight) isCloseToPlayer = false;
+
+
+	// Check if the player is in the enemy's line of sight
+	
+	RaycastHit hit;
+	if (Physics.Raycast(transform.position, transform.forward, out hit, 50.0f) &&
+	    hit.collider.gameObject == PlayerController.instance.gameObject) {
+	    firePoint.transform.LookAt(hit.point);
+	    playerIsInLineOfSight = true;
+	} else {
+	    playerIsInLineOfSight = false;
+	}
+
 
 	// Set state based on whether enemy did shoot in this frame
 	if (enemyDidShoot) StartCoroutine(StandStillToShoot());
@@ -104,4 +126,23 @@ public class EnemyController : MonoBehaviour {
 	isPausingToReload = false;
 	numRoundsInMagazine = maxMagazineSize;
     }
+
+
+    /* CUT THIS OUT  Sat Apr  1 13:00:22 2023 /andrew_bentzen
+    private IEnumerator TurnDirection(Vector3 from, Vector3 to) {
+	isTurning = true;
+	float elapsed = 0f;
+	float duration = 0.25f;
+	while (elapsed < duration) {
+	    float t = elapsed - duration;
+	    // this is a linear interpolation
+	    Vector3 newPosToLook = Vector3.Lerp(from, to, t);
+	    transform.LookAt(newPosToLook);
+	    elapsed += Time.deltaTime;
+	    yield return null;
+	}
+	isTurning = false;
+    }
+    * CUT THIS OUT /andrew_bentzen */
+
 }
