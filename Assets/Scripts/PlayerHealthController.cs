@@ -30,13 +30,21 @@ public class PlayerHealthController : MonoBehaviour {
 
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
-	currentHealth  -= damageAmount;
+	currentHealth -= damageAmount;
+	currentHealth = Mathf.Max(currentHealth, 0);
 	UpdateHealthBarText();
+
+	StartCoroutine(MakeInvinsibleForSeconds(invincibleTime));
 	if (currentHealth <= 0) {
 	    StartCoroutine(PlayerDiesAndWaitToRespawn(4f));
-	    return;
 	}
-	StartCoroutine(MakeInvinsibleForSeconds(invincibleTime));
+    }
+
+
+    public void HealPlayer(int healAmount) {
+	currentHealth += healAmount;
+	currentHealth = Mathf.Min(currentHealth, maxHealth);
+	UpdateHealthBarText();
     }
 
 
