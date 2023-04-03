@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponType {Pistol, MachineGun, SniperRifle, RocketLauncher};
+
 public class Gun : MonoBehaviour {
+
 
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
@@ -10,20 +13,33 @@ public class Gun : MonoBehaviour {
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private int currentAmmo;
     [SerializeField] private int maxAmmo;
+    [SerializeField] private WeaponType weaponType;
 
     private float timeUntilReadyToFire;
     private bool canFire => (timeUntilReadyToFire <= 0f && currentAmmo > 0);
 
 
-    // Start is called before the first frame update
-    void Start() {
-        currentAmmo = maxAmmo;
-	UpdateAmmoBarText();
-    }
-
     // Update is called once per frame
     void Update() {
         timeUntilReadyToFire -= Time.deltaTime;
+    }
+
+
+    // Start is called before the first frame update
+    void Start() {
+        currentAmmo = 20;
+	UpdateAmmoBarText();
+    }
+
+
+    public WeaponType GetWeaponType() {
+	return weaponType;
+    }
+
+
+    public void IncrementAmmo(int numRounds) {
+	currentAmmo += numRounds;
+	UpdateAmmoBarText();
     }
 
 

@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    //private void Shoot() {
-	//Instantiate(projectile, firePoint.position, firePoint.rotation);
-    //}
+    public Gun GetActiveGun() {
+	return activeGun;
+    }
 
     
     private void Shoot() {
