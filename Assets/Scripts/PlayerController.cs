@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
     private PlayerMotor motor;
+    private Gun activeGun;
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
@@ -14,7 +15,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Animator anim;
     //[SerializeField] private GameObject projectile;
-    [SerializeField] private Gun activeGun;
 
     public static PlayerController instance;
 
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
+	activeGun = Gun.instance;
     }
 
 
@@ -83,7 +84,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     
+    public void SetActiveGun(Gun gun) {
+	activeGun = gun;
+    }
+
+    
     private void Shoot() {
+	Debug.Log("Shooting a round----1");
 	// fire a round
 	Camera camera = motor.getCamera();
 	activeGun.ShootSingleRound(camera);

@@ -12,7 +12,7 @@ public class AmmoPickup : MonoBehaviour {
 			     
     [SerializeField] private int baseAmmoAmount = 8;
     [SerializeField] private AmmoPickupSize ammoPickupSize = AmmoPickupSize.Small;
-    [SerializeField] private WeaponType ammoPickupType = WeaponType.Pistol;
+    [SerializeField] private WeaponType ammoPickupType = WeaponType.LaserPistol;
 
 
     private void OnTriggerEnter(Collider other) {
@@ -27,19 +27,18 @@ public class AmmoPickup : MonoBehaviour {
 	    int ammoAmount = GetAmmoAmount(playerWeaponType);
 	    if (playerWeaponType == ammoPickupType) {
 		playerGun.IncrementAmmo(ammoAmount);
-		
+		Destroy(gameObject);
 	    }
 	    
-	    Destroy(gameObject);
 	}
     }
 
 
     private int GetAmmoAmount(WeaponType weaponType) {
 	int result = 0;
-	if (weaponType == WeaponType.Pistol) result = baseAmmoAmount;
-	else if (weaponType == WeaponType.MachineGun) result = baseAmmoAmount*2*2;
-	else if (weaponType == WeaponType.SniperRifle) result = baseAmmoAmount/2;
+	if (weaponType == WeaponType.LaserPistol) result = baseAmmoAmount;
+	else if (weaponType == WeaponType.LaserRepeater) result = baseAmmoAmount*2*2;
+	else if (weaponType == WeaponType.LaserSniper) result = baseAmmoAmount/2;
 	else if (weaponType == WeaponType.RocketLauncher) result = baseAmmoAmount/2/2;
 
 	if (ammoPickupSize == AmmoPickupSize.Large) result *= 4;
