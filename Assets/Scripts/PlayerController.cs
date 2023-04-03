@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
     private PlayerMotor motor;
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
     [SerializeField] private float lookSensitivity = 3f;
@@ -12,9 +13,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Animator anim;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private Transform firePoint;
-    
+    //[SerializeField] private GameObject projectile;
+    [SerializeField] private Gun activeGun;
 
     public static PlayerController instance;
 
@@ -73,25 +73,29 @@ public class PlayerController : MonoBehaviour {
 
 
 	// Handle shooting
-	if (Input.GetMouseButtonDown(0)) { // right click
-	    Camera cam = motor.getCamera();
-	    RaycastHit hit;
-	    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 50.0f)) {
-		if (Vector3.Distance(cam.transform.position, hit.point) > 0.1f) {
-		    firePoint.LookAt(hit.point);
-		}
-	    } else {
-		firePoint.LookAt(cam.transform.position + (cam.transform.forward*30.0f));
-	    }
-
-	    Shoot();
-	}
+	if (Input.GetMouseButtonDown(0)) Shoot(); // left click
+	if (Input.GetMouseButton(0)) ShootFullyAutomatic(); // holding down left click
     }
 
 
+    //private void Shoot() {
+	//Instantiate(projectile, firePoint.position, firePoint.rotation);
+    //}
+
+    
     private void Shoot() {
-	Instantiate(projectile, firePoint.position, firePoint.rotation);
+	// fire a round
+	Camera camera = motor.getCamera();
+	activeGun.ShootSingleRound(camera);
     }
+
+
+    private void ShootFullyAutomatic() {
+	// fire a round
+	Camera camera = motor.getCamera();
+	activeGun.ShootFullyAutomatic(camera);
+    }
+
 
     public void FreezeMovement() {
 	anim.SetBool("isDead", true);
