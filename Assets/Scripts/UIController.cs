@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour {
 
     public Slider healthSlider;
     public Text healthText;
+    public Text ammoText;
 
     public static UIController instance;
 

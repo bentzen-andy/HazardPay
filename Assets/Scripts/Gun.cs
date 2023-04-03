@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour {
     [SerializeField] private bool canAutoFire;
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private int currentAmmo;
+    [SerializeField] private int maxAmmo;
 
     private float timeUntilReadyToFire;
     private bool canFire => (timeUntilReadyToFire <= 0f && currentAmmo > 0);
@@ -16,7 +17,8 @@ public class Gun : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        
+        currentAmmo = maxAmmo;
+	UpdateAmmoBarText();
     }
 
     // Update is called once per frame
@@ -39,6 +41,19 @@ public class Gun : MonoBehaviour {
 
 
     private void ShootRound(Camera playerCamera) {
+	AdjustFirePointToAimAtTargetRetical(playerCamera);
+
+	// Fire a round
+	Instantiate(projectile, firePoint.position, firePoint.rotation);
+	currentAmmo -= 1;
+	currentAmmo = Mathf.Max(currentAmmo, 0);
+	UpdateAmmoBarText();
+	
+	timeUntilReadyToFire = timeBetweenShots;
+    }
+
+
+    private void AdjustFirePointToAimAtTargetRetical(Camera playerCamera) {
 	RaycastHit hit;
 	if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 50.0f)) {
 	    if (Vector3.Distance(playerCamera.transform.position, hit.point) > 0.1f) {
@@ -47,10 +62,11 @@ public class Gun : MonoBehaviour {
 	} else {
 	    firePoint.LookAt(playerCamera.transform.position + (playerCamera.transform.forward*30.0f));
 	}
+    }
 
-	// Fire a round
-	Instantiate(projectile, firePoint.position, firePoint.rotation);
-	currentAmmo -= 1;
-	timeUntilReadyToFire = timeBetweenShots;
+
+    private void UpdateAmmoBarText() {
+	int ammo = Mathf.Max(currentAmmo, 0);
+	UIController.instance.ammoText.text = $"AMMO: {ammo}/{maxAmmo}";
     }
 }
