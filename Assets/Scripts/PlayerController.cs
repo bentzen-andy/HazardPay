@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
@@ -5,7 +7,6 @@ public class PlayerController : MonoBehaviour {
 
     private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
     private PlayerMotor motor;
-    private Gun activeGun;
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
@@ -14,8 +15,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Animator anim;
+    [SerializeField] private List<Gun> guns = new List<Gun>();
+    [SerializeField] private Gun activeGun;
     //[SerializeField] private GameObject projectile;
-
+ 
     public static PlayerController instance;
 
 
@@ -25,7 +28,8 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
-	activeGun = Gun.instance;
+	//activeGun = guns[0];
+	InitGun();
     }
 
 
@@ -76,6 +80,10 @@ public class PlayerController : MonoBehaviour {
 	// Handle shooting
 	if (Input.GetMouseButtonDown(0)) Shoot(); // left click
 	if (Input.GetMouseButton(0)) ShootFullyAutomatic(); // holding down left click
+
+
+	// Handle weapon swaping
+	SwapGun();
     }
 
 
@@ -84,13 +92,55 @@ public class PlayerController : MonoBehaviour {
     }
 
     
+    /* CUT THIS OUT  Sat Apr  8 09:46:57 2023 /andrew_bentzen
     public void SetActiveGun(Gun gun) {
 	activeGun = gun;
+    }
+    * CUT THIS OUT /andrew_bentzen */
+
+
+    private void InitGun() {
+	activeGun.gameObject.SetActive(false);
+	activeGun = guns[0];
+	activeGun.gameObject.SetActive(true);
+    }
+
+
+    private void SwapGun() {
+	if (Input.GetKeyDown(KeyCode.Alpha1)) {
+	    SwapGun(0);
+	    //activeGun.gameObject.SetActive(false);
+	    //activeGun = guns[0];
+	    //activeGun.gameObject.SetActive(true);
+	} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+	    SwapGun(1);
+	    //activeGun.gameObject.SetActive(false);
+	    //activeGun = guns[1];
+	    //activeGun.gameObject.SetActive(true);
+	} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+	    SwapGun(2);
+	    //activeGun.gameObject.SetActive(false);
+	    //activeGun = guns[2];
+	    //activeGun.gameObject.SetActive(true);
+	} else if (Input.GetKeyDown(KeyCode.Tab)) {
+	    int currGunNumber = guns.IndexOf(activeGun);
+	    SwapGun((currGunNumber + 1) % 3);
+	    //activeGun.gameObject.SetActive(false);
+	    //activeGun = guns[(currGunNumber + 1) % 3];
+	    //activeGun.gameObject.SetActive(true);
+	}
+    }
+
+
+    private void SwapGun(int newGunIndex) {
+	activeGun.gameObject.SetActive(false);
+	activeGun = guns[newGunIndex];
+	activeGun.gameObject.SetActive(true);
     }
 
     
     private void Shoot() {
-	Debug.Log("Shooting a round----1");
+	//Debug.Log("Shooting a round----1");
 	// fire a round
 	Camera camera = motor.getCamera();
 	activeGun.ShootSingleRound(camera);

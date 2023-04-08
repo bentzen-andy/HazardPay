@@ -26,11 +26,11 @@ public class Gun : MonoBehaviour {
 
 	// Debuging
 	if (Input.GetMouseButtonDown(1)) {
-	    Debug.Log("canFire " + canFire);
-	    Debug.Log("timeUntilReadyToFire " + timeUntilReadyToFire);
-	    Debug.Log("currentAmmo " + currentAmmo);
-	    Debug.Log("weaponType " + weaponType);
-	    Debug.Log("timeBetweenShots " + timeBetweenShots);
+	    //Debug.Log("canFire " + canFire);
+	    //Debug.Log("timeUntilReadyToFire " + timeUntilReadyToFire);
+	    //Debug.Log("currentAmmo " + currentAmmo);
+	    //Debug.Log("weaponType " + weaponType);
+	    //Debug.Log("timeBetweenShots " + timeBetweenShots);
 	}
     }
 
@@ -41,7 +41,12 @@ public class Gun : MonoBehaviour {
 	//InitWeapon();
         InitAmmo();
 	UpdateAmmoBarText();
-	Debug.Log("init ammo count " + currentAmmo);
+	//Debug.Log("init ammo count " + currentAmmo);
+    }
+
+
+    void OnEnable() {
+	UpdateAmmoBarText();
     }
 
 
@@ -51,20 +56,20 @@ public class Gun : MonoBehaviour {
 
 
     public void IncrementAmmo(int numRounds) {
-	Debug.Log("numRounds " + numRounds);
+	//Debug.Log("numRounds " + numRounds);
 	currentAmmo += numRounds;
 	UpdateAmmoBarText();
     }
 
 
     public void ShootSingleRound(Camera playerCamera) {
-	Debug.Log("Shooting a round----2");
-	Debug.Log("canFire " + canFire);
-	Debug.Log(currentAmmo);
-	Debug.Log(timeUntilReadyToFire);
+	//Debug.Log("Shooting a round----2");
+	//Debug.Log("canFire " + canFire);
+	//Debug.Log(currentAmmo);
+	//Debug.Log(timeUntilReadyToFire);
 
 	if (!canFire) return;
-	Debug.Log("Shooting a round----3");
+	//Debug.Log("Shooting a round----3");
 	ShootRound(playerCamera);
     }
 
@@ -77,13 +82,13 @@ public class Gun : MonoBehaviour {
 
 
     private void InitAmmo() {
-	Debug.Log(weaponType);
+	//Debug.Log(weaponType);
 	int result = 0;
 	if (weaponType == WeaponType.LaserPistol) result = 30;
 	else if (weaponType == WeaponType.LaserRepeater) result = 50;
 	else if (weaponType == WeaponType.LaserSniper) result = 10;
 	else if (weaponType == WeaponType.RocketLauncher) result = 2;
-	Debug.Log(result);
+	//Debug.Log(result);
 
 	currentAmmo = result;
     }
@@ -99,11 +104,11 @@ public class Gun : MonoBehaviour {
     private void ShootRound(Camera playerCamera) {
 	AdjustFirePointToAimAtTargetRetical(playerCamera);
 
-	Debug.Log("Shooting a round----4");
+	//Debug.Log("Shooting a round----4");
 
 	// Fire a round
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
-	Debug.Log("Shooting a round----5");
+	//Debug.Log("Shooting a round----5");
 	currentAmmo -= 1;
 	currentAmmo = Mathf.Max(currentAmmo, 0);
 	UpdateAmmoBarText();

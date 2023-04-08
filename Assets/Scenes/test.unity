@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &40158975
 Transform:
   m_ObjectHideFlags: 0
@@ -8989,6 +8989,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   anim: {fileID: 2047925034}
+  guns:
+  - {fileID: 40158976}
+  - {fileID: 1026230651}
+  - {fileID: 1745224910}
+  activeGun: {fileID: 40158976}
 --- !u!136 &2047925033
 CapsuleCollider:
   m_ObjectHideFlags: 0
