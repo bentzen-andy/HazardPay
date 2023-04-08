@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &40158975
 Transform:
   m_ObjectHideFlags: 0
@@ -251,6 +251,7 @@ MonoBehaviour:
   timeBetweenShots: 0
   maxAmmo: 100
   weaponType: 0
+  zoomAmount: 50
 --- !u!1 &45163470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,7 +3752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &894916442
 Transform:
   m_ObjectHideFlags: 0
@@ -4250,6 +4251,7 @@ MonoBehaviour:
   timeBetweenShots: 0.15
   maxAmmo: 100
   weaponType: 1
+  zoomAmount: 40
 --- !u!4 &1052244671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1431988691348505070, guid: f429e4a888dd91e4e9a524684b1b4d51, type: 3}
@@ -6940,6 +6942,7 @@ MonoBehaviour:
   timeBetweenShots: 2
   maxAmmo: 30
   weaponType: 2
+  zoomAmount: 20
 --- !u!1 &1746279770
 GameObject:
   m_ObjectHideFlags: 0
@@ -8932,8 +8935,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5b29bfc734eb14fa3f85f8efc47d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1523389930}
+  camera: {fileID: 1523389930}
   cameraRotationLimit: 85
+  zoomSpeed: 8
 --- !u!54 &2047925029
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8982,7 +8986,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   runSpeed: 12
-  lookSensitivity: 3
+  lookSensitivity: 2
+  lookSensitivityNormal: 2
+  lookSensitivitySniper: 0.5
   jumpForce: 5000
   groundCheckPoint: {fileID: 840364462}
   whatIsGround:

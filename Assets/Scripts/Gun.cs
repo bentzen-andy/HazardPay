@@ -12,6 +12,7 @@ public class Gun : MonoBehaviour {
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private int maxAmmo;
     [SerializeField] private WeaponType weaponType;
+    [SerializeField] private float zoomAmount;
 			 
     private int currentAmmo;
     private float timeUntilReadyToFire;
@@ -119,7 +120,7 @@ public class Gun : MonoBehaviour {
 
     private void AdjustFirePointToAimAtTargetRetical(Camera playerCamera) {
 	RaycastHit hit;
-	if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 50.0f)) {
+	if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 100.0f)) {
 	    if (Vector3.Distance(playerCamera.transform.position, hit.point) > 0.1f) {
 		firePoint.LookAt(hit.point);
 	    }
@@ -132,5 +133,10 @@ public class Gun : MonoBehaviour {
     private void UpdateAmmoBarText() {
 	int ammo = Mathf.Max(currentAmmo, 0);
 	UIController.instance.ammoText.text = $"AMMO: {ammo}/{maxAmmo}";
+    }
+
+
+    public float GetZoom() {
+	return zoomAmount;
     }
 }

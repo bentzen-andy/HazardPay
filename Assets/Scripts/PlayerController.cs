@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
-    [SerializeField] private float lookSensitivity = 3f;
+    [SerializeField] private float lookSensitivity = 2f;
+    [SerializeField] private float lookSensitivityNormal = 2f;
+    [SerializeField] private float lookSensitivitySniper = 0.5f;
     [SerializeField] private float jumpForce = 3000f;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
@@ -28,7 +30,6 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
-	//activeGun = guns[0];
 	InitGun();
     }
 
@@ -76,14 +77,15 @@ public class PlayerController : MonoBehaviour {
 	// Apply the jump force
 	motor.ApplyJump(_jumpForce);
 
-
 	// Handle shooting
 	if (Input.GetMouseButtonDown(0)) Shoot(); // left click
 	if (Input.GetMouseButton(0)) ShootFullyAutomatic(); // holding down left click
 
-
 	// Handle weapon swaping
 	SwapGun();
+
+	// Handle weapon zoom
+	ApplyZoom();
     }
 
 
@@ -106,39 +108,6 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    private void SwapGun() {
-	if (Input.GetKeyDown(KeyCode.Alpha1)) {
-	    SwapGun(0);
-	    //activeGun.gameObject.SetActive(false);
-	    //activeGun = guns[0];
-	    //activeGun.gameObject.SetActive(true);
-	} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-	    SwapGun(1);
-	    //activeGun.gameObject.SetActive(false);
-	    //activeGun = guns[1];
-	    //activeGun.gameObject.SetActive(true);
-	} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-	    SwapGun(2);
-	    //activeGun.gameObject.SetActive(false);
-	    //activeGun = guns[2];
-	    //activeGun.gameObject.SetActive(true);
-	} else if (Input.GetKeyDown(KeyCode.Tab)) {
-	    int currGunNumber = guns.IndexOf(activeGun);
-	    SwapGun((currGunNumber + 1) % 3);
-	    //activeGun.gameObject.SetActive(false);
-	    //activeGun = guns[(currGunNumber + 1) % 3];
-	    //activeGun.gameObject.SetActive(true);
-	}
-    }
-
-
-    private void SwapGun(int newGunIndex) {
-	activeGun.gameObject.SetActive(false);
-	activeGun = guns[newGunIndex];
-	activeGun.gameObject.SetActive(true);
-    }
-
-    
     private void Shoot() {
 	//Debug.Log("Shooting a round----1");
 	// fire a round
@@ -151,6 +120,40 @@ public class PlayerController : MonoBehaviour {
 	// fire a round
 	Camera camera = motor.getCamera();
 	activeGun.ShootFullyAutomatic(camera);
+    }
+
+
+    private void SwapGun() {
+	if (Input.GetKeyDown(KeyCode.Alpha1)) {
+	    SwapGun(0);
+	} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+	    SwapGun(1);
+	} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+	    SwapGun(2);
+	} else if (Input.GetKeyDown(KeyCode.Tab)) {
+	    int currGunNumber = guns.IndexOf(activeGun);
+	    SwapGun((currGunNumber + 1) % 3);
+	}
+    }
+
+
+    private void SwapGun(int newGunIndex) {
+	activeGun.gameObject.SetActive(false);
+	activeGun = guns[newGunIndex];
+	activeGun.gameObject.SetActive(true);
+    }
+
+
+    private void ApplyZoom() {
+	if (Input.GetMouseButtonDown(1)) {
+	    motor.ZoomIn(activeGun.GetZoom());
+	    if (activeGun.GetWeaponType() == WeaponType.LaserSniper) {
+		lookSensitivity = lookSensitivitySniper;
+	    }
+	} else if (Input.GetMouseButtonUp(1)) {
+	    motor.ZoomOut();
+	    lookSensitivity = lookSensitivityNormal;
+	}
     }
 
 
