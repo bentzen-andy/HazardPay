@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 
 
     private void Update() {
+	if (PlayerHealthController.instance.PlayerIsDead()) return;
+
         // calculate movement velocity as a 3D vector 
         float xMov = Input.GetAxisRaw("Horizontal");
         float zMov = Input.GetAxisRaw("Vertical");

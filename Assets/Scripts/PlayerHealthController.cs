@@ -34,8 +34,11 @@ public class PlayerHealthController : MonoBehaviour {
 	currentHealth = Mathf.Max(currentHealth, 0);
 	UpdateHealthBarText();
 
+	UIController.instance.ShowDamage();
+
 	StartCoroutine(MakeInvinsibleForSeconds(invincibleTime));
 	if (currentHealth <= 0) {
+	    UIController.instance.ShowDeath();
 	    StartCoroutine(PlayerDiesAndWaitToRespawn(4f));
 	}
     }

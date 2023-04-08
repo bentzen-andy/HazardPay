@@ -14,7 +14,10 @@ public class Gun : MonoBehaviour {
     [SerializeField] private WeaponType weaponType;
     [SerializeField] private float zoomAmount;
     [SerializeField] private int startingAmmo;
+    [SerializeField] private GameObject muzzleFlash;
+    [SerializeField] private float muzzleFlashTime = 0.025f;
 			 
+    private bool muzzleFlashIsActive;
     private int currentAmmo;
     private float timeUntilReadyToFire;
     private bool canFire => (timeUntilReadyToFire <= 0f && currentAmmo > 0);
@@ -119,6 +122,10 @@ public class Gun : MonoBehaviour {
 	currentAmmo -= 1;
 	currentAmmo = Mathf.Max(currentAmmo, 0);
 	UpdateAmmoBarText();
+
+	// Muzzle flash
+	StartCoroutine(MuzzelFlash(muzzleFlashTime));
+	muzzleFlash.SetActive(true);
 	
 	timeUntilReadyToFire = timeBetweenShots;
     }
@@ -146,5 +153,15 @@ public class Gun : MonoBehaviour {
 
     public float GetZoom() {
 	return zoomAmount;
+    }
+
+
+    private IEnumerator MuzzelFlash(float seconds) {
+	if (muzzleFlashIsActive) yield break;
+        muzzleFlashIsActive = true;
+	muzzleFlash.SetActive(true);
+	yield return new WaitForSeconds(seconds);
+        muzzleFlashIsActive = false;
+	muzzleFlash.SetActive(false);
     }
 }
