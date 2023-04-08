@@ -34,7 +34,10 @@ public class WeaponPickup : MonoBehaviour {
 
 	// if this is a new weapon
 	playerCollectedGuns.Add(gunPickup);
-	int gunIndex = playerCollectedGuns.IndexOf(gunPickup);
+
+	// switch to the new weapon
+	List<Gun> playerGuns = PlayerController.instance.GetAllGuns();
+	int gunIndex = playerGuns.IndexOf(gunPickup);
 	PlayerController.instance.SwapGun(gunIndex);
     }
 }
