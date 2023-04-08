@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour {
     private void Start() {
         motor = GetComponent<PlayerMotor>();
 	InitGun();
+	
+	foreach (Gun gun in guns) Debug.Log(gun.GetWeaponType());
     }
 
 
@@ -94,6 +96,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     
+    public List<Gun> GetAllGuns() {
+	return guns;
+    }
+
+    
     /* CUT THIS OUT  Sat Apr  8 09:46:57 2023 /andrew_bentzen
     public void SetActiveGun(Gun gun) {
 	activeGun = gun;
@@ -102,9 +109,19 @@ public class PlayerController : MonoBehaviour {
 
 
     private void InitGun() {
-	activeGun.gameObject.SetActive(false);
-	activeGun = guns[0];
-	activeGun.gameObject.SetActive(true);
+	// initialize all guns
+	//for (int i = 0; i < guns.Count; i++) {
+	    //SwapGun((i+1) % guns.Count);
+	//}
+
+	foreach (Gun gun in guns) {
+	    gun.gameObject.SetActive(false);
+	}
+	SwapGun(0);
+
+	//activeGun.gameObject.SetActive(false);
+	//activeGun = guns[0];
+	//activeGun.gameObject.SetActive(true);
     }
 
 
@@ -138,9 +155,11 @@ public class PlayerController : MonoBehaviour {
 
 
     private void SwapGun(int newGunIndex) {
+	Debug.Log("old active gun is: " + activeGun);
 	activeGun.gameObject.SetActive(false);
 	activeGun = guns[newGunIndex];
 	activeGun.gameObject.SetActive(true);
+	Debug.Log("new active gun is: " + activeGun);
     }
 
 
