@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour {
     [SerializeField] private int maxAmmo;
     [SerializeField] private WeaponType weaponType;
     [SerializeField] private float zoomAmount;
+    [SerializeField] private int startingAmmo;
 			 
     private int currentAmmo;
     private float timeUntilReadyToFire;
@@ -53,6 +54,11 @@ public class Gun : MonoBehaviour {
 
     public WeaponType GetWeaponType() {
 	return weaponType;
+    }
+
+
+    public int GetStartingAmmo() {
+	return startingAmmo;
     }
 
 

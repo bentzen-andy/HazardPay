@@ -19,17 +19,6 @@ public class AmmoPickup : MonoBehaviour {
 	if (other.tag == "Player" && !isCollected) {
 	    isCollected = true;
 	    // Give ammo to the player
-	    // FIXME change this so that it woks on an arry of guns that the player is carrying, rather
-	    // than just the active gun.
-	    //Gun playerGun = other.GetComponent<PlayerController>().GetActiveGun();
-	    //WeaponType playerWeaponType = playerGun.GetWeaponType();
-
-	    //int ammoAmount = GetAmmoAmount(playerWeaponType);
-	    //if (playerWeaponType == ammoPickupType) {
-		//playerGun.IncrementAmmo(ammoAmount);
-		//Destroy(gameObject);
-	    //}
-
 	    int ammoAmont = 0;
 	    List<Gun> playerGuns = other.GetComponent<PlayerController>().GetAllGuns();
 	    foreach (Gun gun in playerGuns) {

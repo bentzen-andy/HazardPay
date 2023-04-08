@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WeaponPickup : MonoBehaviour {
+
+    private bool isCollected;
+
+    [SerializeField] private Gun gunPickup;
+
+
+    private void OnTriggerEnter(Collider other) {
+	if (other.tag == "Player" && !isCollected) {
+	    isCollected = true;
+
+	    // Give weapon to the player
+	    HandlePickup(other);
+	    Destroy(gameObject);
+	}
+    }
+    
+    
+    private void HandlePickup(Collider other) {
+	List<Gun> playerCollectedGuns = other.GetComponent<PlayerController>().GetAllCollectedGuns();
+
+	// check if the player already has this gun
+	foreach (Gun playerGun in playerCollectedGuns) {
+	    WeaponType currWeaponType = playerGun.GetWeaponType();
+	    if (currWeaponType == gunPickup.GetWeaponType()) {
+		playerGun.IncrementAmmo(playerGun.GetStartingAmmo());
+		return;
+	    }
+	}
+
+	// if this is a new weapon
+	playerCollectedGuns.Add(gunPickup);
+	int gunIndex = playerCollectedGuns.IndexOf(gunPickup);
+	PlayerController.instance.SwapGun(gunIndex);
+    }
+}

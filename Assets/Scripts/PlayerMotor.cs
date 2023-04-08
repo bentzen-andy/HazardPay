@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
 
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera cam;
     [SerializeField] private float cameraRotationLimit = 85f;
     [SerializeField] private float zoomSpeed = 4f;
 
@@ -26,12 +26,12 @@ public class PlayerMotor : MonoBehaviour {
 
 
     public Camera getCamera() {
-	return camera;
+	return cam;
     }
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
-	startFOV = camera.fieldOfView;
+	startFOV = cam.fieldOfView;
 	targetFOV = startFOV;
     }
 
@@ -96,19 +96,19 @@ public class PlayerMotor : MonoBehaviour {
     // Perform rotation
     private void PerformRotation() {
         rb.MoveRotation(rb.rotation * Quaternion.Euler (rotation));
-        if (camera != null) {
+        if (cam != null) {
             // Set our rotation and clamp it
             currentCameraRotationX -= cameraRotationX;
             currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
 
             //Apply our rotation to the transform of our camera
-            camera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+            cam.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
         }
     }
 
 
     private void PerformZoom() {
-	camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, zoomSpeed * Time.deltaTime);
+	cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, zoomSpeed * Time.deltaTime);
     }
 
 
