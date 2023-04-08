@@ -42,7 +42,9 @@ public class PlayerController : MonoBehaviour {
 
 
     private void Update() {
+	// Keep player from moving/shooting if is dead or game is paused
 	if (PlayerHealthController.instance.PlayerIsDead()) return;
+	if (GameManager.instance.isPaused) return;
 
         // calculate movement velocity as a 3D vector 
         float xMov = Input.GetAxisRaw("Horizontal");

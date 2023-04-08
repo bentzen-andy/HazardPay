@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public bool isPaused => (UIController.instance.pauseScreen.activeInHierarchy);
     public static GameManager instance;
     
 
@@ -19,10 +20,35 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-         
+	if (Input.GetKeyDown(KeyCode.Escape)) {
+	    PauseUnpause();
+	}
     }
 
     public void ReloadScene() {
+	Unpause();
 	SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    
+    public void PauseUnpause() {
+	if (isPaused) Unpause();
+	else  Pause();
+    }
+    
+    
+    private void Pause() {
+	UIController.instance.pauseScreen.SetActive(true);
+	Cursor.lockState = CursorLockMode.None;
+	Time.timeScale = 0f;
+	
+    }
+    
+    
+    private void Unpause() {
+	UIController.instance.pauseScreen.SetActive(false);
+	Cursor.lockState = CursorLockMode.Locked;
+	Time.timeScale = 1f;
+	
     }
 }

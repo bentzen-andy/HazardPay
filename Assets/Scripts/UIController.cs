@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour {
     public float damageColorAlpha = 0.25f;
     public float damageColorFadeTime = 2f;
     public float deathColorFadeTime = 0.5f;
+    public GameObject pauseScreen;
 
     public static UIController instance;
 
@@ -36,9 +37,6 @@ public class UIController : MonoBehaviour {
 	    currDamageAlpha = Mathf.MoveTowards(damageEffect.color.a, 1f, deathColorFadeTime * Time.deltaTime);
 	    color = damageEffect.color;
 	    damageEffect.color = new Color(currDamageR, currDamageG, currDamageB, currDamageAlpha);
-
-	    
-
 	} else {
 	    currDamageAlpha = Mathf.MoveTowards(damageEffect.color.a, 0f, damageColorFadeTime * Time.deltaTime);
 	    color = damageEffect.color;
