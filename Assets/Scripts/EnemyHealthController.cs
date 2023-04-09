@@ -17,7 +17,7 @@ public class EnemyHealthController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 	
-	if (currentHealth <= 0) Destroy(gameObject);
+	if (currentHealth <= 0) Death();
         
     }
 
@@ -29,5 +29,12 @@ public class EnemyHealthController : MonoBehaviour {
 
     public void DamageEnemyHeadshot(int damageAmount) {
 	currentHealth -= damageAmount*2;
+    }
+
+
+    private void Death() {
+
+	AudioManager.instance.PlaySFX(2);
+	Destroy(gameObject);
     }
 }

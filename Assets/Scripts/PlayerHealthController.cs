@@ -35,6 +35,7 @@ public class PlayerHealthController : MonoBehaviour {
 	UpdateHealthBarText();
 
 	UIController.instance.ShowDamage();
+	AudioManager.instance.PlaySFX(7);
 
 	StartCoroutine(MakeInvinsibleForSeconds(invincibleTime));
 	if (currentHealth <= 0) {
@@ -55,6 +56,8 @@ public class PlayerHealthController : MonoBehaviour {
 	if (isWaitingToRespawn) yield break;
 	isDead = true;
 	AudioManager.instance.StopBackgroundMusic();
+	AudioManager.instance.StopSFX(7);
+	AudioManager.instance.PlaySFX(6);
 
         isWaitingToRespawn = true;
 	PlayerController.instance.FreezeMovement();

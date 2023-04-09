@@ -18,6 +18,7 @@ public class AmmoPickup : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 	if (other.tag == "Player" && !isCollected) {
 	    isCollected = true;
+	    AudioManager.instance.PlaySFX(3);
 	    // Give ammo to the player
 	    int ammoAmont = 0;
 	    List<Gun> playerGuns = other.GetComponent<PlayerController>().GetAllGuns();

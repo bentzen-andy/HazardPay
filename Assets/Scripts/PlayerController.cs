@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour {
 	Vector3 _jumpForce = Vector3.zero;
 	if (canJump && Input.GetButton("Jump")) {
 	    _jumpForce = Vector3.up * jumpForce;
+	    AudioManager.instance.PlaySFX(8);
 	}
 
 	// Apply the jump force

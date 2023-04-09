@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
     
     public void PauseUnpause() {
 	if (isPaused) Unpause();
-	else  Pause();
+	else Pause();
     }
     
     
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 	UIController.instance.pauseScreen.SetActive(true);
 	Cursor.lockState = CursorLockMode.None;
 	Time.timeScale = 0f;
-	
+	AudioManager.instance.StopSfxAll();
     }
     
     

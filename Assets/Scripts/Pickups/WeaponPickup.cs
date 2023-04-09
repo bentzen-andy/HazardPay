@@ -12,6 +12,7 @@ public class WeaponPickup : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 	if (other.tag == "Player" && !isCollected) {
 	    isCollected = true;
+	    AudioManager.instance.PlaySFX(4);
 
 	    // Give weapon to the player
 	    HandlePickup(other);

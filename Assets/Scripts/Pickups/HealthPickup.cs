@@ -12,6 +12,7 @@ public class HealthPickup : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 	if (other.tag == "Player" && !isCollected) {
 	    isCollected = true;
+	    AudioManager.instance.PlaySFX(5);
 	    PlayerHealthController.instance.HealPlayer(healAmount);
 	    Destroy(gameObject);
 	}

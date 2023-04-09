@@ -29,8 +29,8 @@ public class CheckpointController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 	if (other.gameObject.tag == "Player") {
 	    PlayerPrefs.SetString(checkpointKey, checkpointName);
+	    AudioManager.instance.PlaySFX(1);
 	}
-	Debug.Log("player hit " + checkpointName);
     }
 
 

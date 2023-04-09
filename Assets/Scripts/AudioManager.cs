@@ -6,6 +6,9 @@ public class AudioManager : MonoBehaviour {
 
     public static AudioManager instance;
     [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private AudioSource footSteps;
+
+    [SerializeField] private AudioSource[] soundEffects;
     
 
     private void Awake() {
@@ -25,7 +28,30 @@ public class AudioManager : MonoBehaviour {
     }
 
 
+    public void PlaySFX(int sfxNumber) {
+	soundEffects[sfxNumber].Stop();
+	soundEffects[sfxNumber].Play();
+    }
+
+
+    public void StopSFX(int sfxNumber) {
+	soundEffects[sfxNumber].Stop();
+    }
+
+
+    public void StopSfxAll() {
+	foreach (AudioSource sfx in soundEffects) {
+	    sfx.Stop();
+	}
+	footSteps.Stop();
+    }
+
+
     public void StopBackgroundMusic() {
 	backgroundMusic.Stop();
+	Destroy(footSteps);
     }
+
+
+	
 }
