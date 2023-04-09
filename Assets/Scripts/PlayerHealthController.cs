@@ -54,6 +54,8 @@ public class PlayerHealthController : MonoBehaviour {
     private IEnumerator PlayerDiesAndWaitToRespawn(float seconds) {
 	if (isWaitingToRespawn) yield break;
 	isDead = true;
+	AudioManager.instance.StopBackgroundMusic();
+
         isWaitingToRespawn = true;
 	PlayerController.instance.FreezeMovement();
 	yield return new WaitForSeconds(seconds);
