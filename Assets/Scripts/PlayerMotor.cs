@@ -16,6 +16,7 @@ public class PlayerMotor : MonoBehaviour {
     private float cameraRotationX = 0f;
     private float currentCameraRotationX = 0f;
     private Vector3 jumpForce = Vector3.zero;
+    private Vector3 bounceForce = Vector3.zero;
 
     private float startFOV;
     private float targetFOV;
@@ -54,11 +55,16 @@ public class PlayerMotor : MonoBehaviour {
     }
 
 
-    // Get a force vector for our thrusters
+    // Get a force vector
     public void ApplyJump (Vector3 jumpForce) {
 	this.jumpForce = jumpForce;
     }
 
+
+    // Get a force vector
+    public void ApplyBounce (Vector3 bounceForce) {
+	this.bounceForce = bounceForce;
+    }
 
 
     public void ZoomIn(float newZoom) {
@@ -89,6 +95,10 @@ public class PlayerMotor : MonoBehaviour {
 
 	if (jumpForce != Vector3.zero) {
 	    rb.AddForce(jumpForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+	}
+
+	if (bounceForce != Vector3.zero) {
+	    rb.AddForce(bounceForce * Time.fixedDeltaTime, ForceMode.Acceleration);
 	}
     }
 

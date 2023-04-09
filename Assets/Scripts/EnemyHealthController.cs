@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyHealthController : MonoBehaviour {
 
     [SerializeField] private int currentHealth = 100;
-    public CapsuleCollider head;
-    public CapsuleCollider body;
+    public Collider head;
+    public Collider body;
     
 
     // Start is called before the first frame update

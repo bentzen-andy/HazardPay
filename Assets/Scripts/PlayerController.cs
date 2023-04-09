@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float lookSensitivityNormal = 2f;
     [SerializeField] private float lookSensitivitySniper = 0.5f;
     [SerializeField] private float jumpForce = 3000f;
+    [SerializeField] private float bounceForce = 8000f;
+    [SerializeField] private bool isBouncing;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Animator anim;
@@ -88,6 +90,16 @@ public class PlayerController : MonoBehaviour {
 
 	// Apply the jump force
 	motor.ApplyJump(_jumpForce);
+
+	// calculate the bounce force
+	Vector3 _bouceForce = Vector3.zero;
+	if (isBouncing) {
+	    _bouceForce = Vector3.up * bounceForce;
+	    AudioManager.instance.PlaySFX(0);
+	}
+
+	// Apply bounce force
+	motor.ApplyBounce(_bouceForce);
 
 	// Handle shooting
 	if (Input.GetMouseButtonDown(0)) Shoot(); // left click
@@ -196,6 +208,18 @@ public class PlayerController : MonoBehaviour {
     public void FreezeMovement() {
 	anim.SetBool("isDead", true);
 	motor.Freeze();
+    }
+
+
+    public void Bounce(float force) {
+	bounceForce = force;
+	isBouncing = true;
+    }
+
+
+    public void EndBounce(float force) {
+	bounceForce = force;
+	isBouncing = false;
     }
 }
 
