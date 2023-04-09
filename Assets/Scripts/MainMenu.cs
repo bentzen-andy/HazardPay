@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-    
     [SerializeField] private string firstLevel;
 
     // Start is called before the first frame update

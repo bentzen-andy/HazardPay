@@ -13723,7 +13723,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 301328005}
         m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
