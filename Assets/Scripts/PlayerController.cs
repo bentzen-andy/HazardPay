@@ -166,12 +166,14 @@ public class PlayerController : MonoBehaviour {
 	    SwapGun(1);
 	} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
 	    SwapGun(2);
+	} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+	    SwapGun(3);
 	} else if (Input.GetKeyDown(KeyCode.Tab)) {
 	    int currGunNumber = guns.IndexOf(activeGun);
-	    bool res = SwapGun((currGunNumber + 1) % 3);
+	    bool res = SwapGun((currGunNumber + 1) % guns.Count);
 	    currGunNumber++;
 	    while (!res) {
-	      res = SwapGun((currGunNumber + 1) % 3);
+	      res = SwapGun((currGunNumber + 1) % guns.Count);
 	      currGunNumber++;
 	    }
 	}

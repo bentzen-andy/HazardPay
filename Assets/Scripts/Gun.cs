@@ -145,7 +145,14 @@ public class Gun : MonoBehaviour {
 
     private void UpdateAmmoBarText() {
 	// Don't update the UI text unless the change pertains to the players current weapon.
-	if (weaponType != PlayerController.instance.GetActiveGun().GetWeaponType()) return;
+	PlayerController pcInstance = PlayerController.instance;
+	if (pcInstance == null) return;
+	Gun activeGun = pcInstance.GetActiveGun();
+	if (activeGun == null) return;
+	WeaponType activeWeaponType = activeGun.GetWeaponType();
+	if (activeWeaponType != weaponType) return;
+
+	//if (weaponType != PlayerController.instance.GetActiveGun().GetWeaponType()) return;
 	int ammo = Mathf.Max(currentAmmo, 0);
 	UIController.instance.ammoText.text = $"AMMO: {ammo}/{maxAmmo}";
     }
