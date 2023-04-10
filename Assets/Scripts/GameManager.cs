@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public bool isPaused => (UIController.instance.pauseScreen.activeInHierarchy);
+    public bool levelIsEnding;
+    //public bool levelIsStarting = true;
+
     public static GameManager instance;
     
 
