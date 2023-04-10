@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour {
 
     private bool canJump => (Physics.OverlapSphere(groundCheckPoint.position, 0.2f, whatIsGround).Length > 0);
     private PlayerMotor motor;
+    private bool isBouncing;
     //private Vector3 gunStartPos;
-
+    
     [SerializeField] private float speed = 5f;
     [SerializeField] private float runSpeed = 12f;
     [SerializeField] private float lookSensitivity = 2f;
@@ -16,7 +17,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float lookSensitivitySniper = 0.5f;
     [SerializeField] private float jumpForce = 3000f;
     [SerializeField] private float bounceForce = 8000f;
-    [SerializeField] private bool isBouncing;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Animator anim;

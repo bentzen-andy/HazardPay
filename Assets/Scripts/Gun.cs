@@ -65,9 +65,15 @@ public class Gun : MonoBehaviour {
     }
 
 
+    public bool AmmoIsAtMax() {
+	return currentAmmo >= maxAmmo;
+    }
+
+
     public void IncrementAmmo(int numRounds) {
 	//Debug.Log("numRounds " + numRounds);
 	currentAmmo += numRounds;
+	currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
 	UpdateAmmoBarText();
     }
 
