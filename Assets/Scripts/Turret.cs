@@ -9,24 +9,21 @@ public class Turret : MonoBehaviour {
     [SerializeField] private float timeBetweenShots = 0.5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private Transform gun;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePoint1;
+    [SerializeField] private Transform firePoint2;
 
     private float shotCounter;
+    private bool canShootBarrel2;
 
 
-    // Start is called before the first frame update
-    void Start() {
-	shotCounter = timeBetweenShots;
-    }
-    
     // Update is called once per frame
     void Update() {
 	if (PlayerIsWithinRange()) {
 	    gun.LookAt(PlayerController.instance.transform.position);
 	    shotCounter -= Time.deltaTime;
-	    if (shotCounter <= 0) Shoot();
+	    ShootBarrel1();
+	    ShootBarrel2();
 	} else {
-	    shotCounter = timeBetweenShots;
 	    gun.rotation = Quaternion.Lerp(gun.rotation,
 					     Quaternion.Euler(0f, gun.rotation.eulerAngles.y + 10f, 0f),
 					     rotateSpeed * Time.deltaTime);
@@ -39,8 +36,18 @@ public class Turret : MonoBehaviour {
     }
 
 
-    private void Shoot() {
-	Instantiate(projectile, firePoint.position, firePoint.rotation);
+    private void ShootBarrel1() {
+	if (shotCounter > 0) return;
+	Instantiate(projectile, firePoint1.position, firePoint1.rotation);
+	canShootBarrel2 = true;
 	shotCounter = timeBetweenShots;
+    }
+
+
+    private void ShootBarrel2() {
+	if (shotCounter > timeBetweenShots/2) return;
+	if (!canShootBarrel2) return;
+	Instantiate(projectile, firePoint2.position, firePoint2.rotation);
+	canShootBarrel2 = false;
     }
 }
