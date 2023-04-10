@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour {
 	if (isPausingToReload) return false;
 	if (numRoundsInMagazine <= 0) return false;
 	if (PlayerHealthController.instance.PlayerIsDead()) return false;
+	if (GameManager.instance.levelIsEnding) return false;
 
 	// FIXME: change this so that the enemey gradually turns
         transform.LookAt(playerPos);

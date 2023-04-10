@@ -21,6 +21,10 @@ public class BulletController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+	if (GameManager.instance.levelIsEnding) {
+	    Destroy(gameObject);
+	    return;
+	}
 	rb.velocity = transform.forward * moveSpeed;
 
 	// destroy bullets after x seconds

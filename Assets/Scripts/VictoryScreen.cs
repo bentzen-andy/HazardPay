@@ -15,6 +15,7 @@ public class VictoryScreen : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        Cursor.lockState = CursorLockMode.None;
         StartCoroutine(ShowObjects());
     }
 
@@ -28,6 +29,7 @@ public class VictoryScreen : MonoBehaviour {
 
     public void MainMenu() {
 	Time.timeScale = 1f;
+	Debug.Log("loading the main menu");
 	SceneManager.LoadScene(mainMenuScene);
     }
 

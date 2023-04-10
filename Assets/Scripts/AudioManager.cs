@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour {
 
     public static AudioManager instance;
     [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private AudioSource victoryMusic;
     [SerializeField] private AudioSource footSteps;
 
     [SerializeField] private AudioSource[] soundEffects;
@@ -50,6 +51,12 @@ public class AudioManager : MonoBehaviour {
     public void StopBackgroundMusic() {
 	backgroundMusic.Stop();
 	Destroy(footSteps);
+    }
+
+
+    public void PlayLevelVictoryMusic() {
+	StopBackgroundMusic();
+	victoryMusic.Play();
     }
 
 

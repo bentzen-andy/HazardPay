@@ -22,6 +22,7 @@ public class LevelExit : MonoBehaviour {
     private void OnTriggerExit(Collider other) {
 	if (other.tag == "Player") {
 	    StartCoroutine(EndLevel());
+	    AudioManager.instance.PlayLevelVictoryMusic();
 	}
 
     }
@@ -30,6 +31,10 @@ public class LevelExit : MonoBehaviour {
 
 
     private IEnumerator EndLevel() {
+	// Set the new checkpoint to be at the beginnig of the next level
+	PlayerPrefs.SetString(nextLevel + "_checkpoint", "");
+
+	// run the end-of-level sequence 
 	GameManager.instance.levelIsEnding = true;
 	yield return new WaitForSeconds(waitTimeToLoadNextLevel);
 	GameManager.instance.levelIsEnding = false;

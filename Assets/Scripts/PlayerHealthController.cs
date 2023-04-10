@@ -30,6 +30,7 @@ public class PlayerHealthController : MonoBehaviour {
 
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
+	if (GameManager.instance.levelIsEnding) return;
 	currentHealth -= damageAmount;
 	currentHealth = Mathf.Max(currentHealth, 0);
 	UpdateHealthBarText();

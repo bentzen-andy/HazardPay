@@ -19,10 +19,7 @@ public class Turret : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 	if (PlayerIsWithinRange()) {
-	    gun.LookAt(PlayerController.instance.transform.position);
-	    shotCounter -= Time.deltaTime;
-	    ShootBarrel1();
-	    ShootBarrel2();
+	    Shoot();
 	} else {
 	    gun.rotation = Quaternion.Lerp(gun.rotation,
 					     Quaternion.Euler(0f, gun.rotation.eulerAngles.y + 10f, 0f),
@@ -33,6 +30,16 @@ public class Turret : MonoBehaviour {
 
     private bool PlayerIsWithinRange() {
 	return Vector3.Distance(transform.position, PlayerController.instance.transform.position) < rangeToTargetPlayer;
+    }
+
+
+    private void Shoot() {
+	if (GameManager.instance.levelIsEnding) return;
+
+	gun.LookAt(PlayerController.instance.transform.position);
+	shotCounter -= Time.deltaTime;
+	ShootBarrel1();
+	ShootBarrel2();
     }
 
 
