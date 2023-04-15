@@ -8,6 +8,8 @@ public class LevelExit : MonoBehaviour {
     [SerializeField] private string nextLevel;
     [SerializeField] private float waitTimeToLoadNextLevel = 2f;
 
+    private string checkpointKey => ($"{SceneManager.GetActiveScene().name}_checkpoint");
+
     // Start is called before the first frame update
     void Start() {
         
@@ -33,6 +35,7 @@ public class LevelExit : MonoBehaviour {
     private IEnumerator EndLevel() {
 	// Set the new checkpoint to be at the beginnig of the next level
 	PlayerPrefs.SetString(nextLevel + "_checkpoint", "");
+	PlayerPrefs.SetString(checkpointKey, "");
 
 	// run the end-of-level sequence 
 	GameManager.instance.levelIsEnding = true;

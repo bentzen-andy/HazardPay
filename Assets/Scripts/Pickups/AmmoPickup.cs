@@ -18,21 +18,40 @@ public class AmmoPickup : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 	if (other.tag == "Player" && !isCollected) {
 	    // Give ammo to the player
-	    int ammoAmont = 0;
+	    int ammoAmont = GetAmmoAmount(ammoPickupType);
+	    Debug.Log("ammoAmont " + ammoAmont);
+	    Debug.Log("ammoPickupType " + ammoPickupType);
+	    if (PlayerAmmoController.instance.AmmoIsAtMax(ammoPickupType)) return;
+	    Debug.Log("ammo is not at max before picking this up.......");
+
+	    PlayerAmmoController.instance.IncrementAmmo(ammoPickupType, ammoAmont);
+	    Destroy(gameObject);
+	    isCollected = true;
+	    AudioManager.instance.PlaySFX(3);
+	    
+
+
+
+
+	    /* CUT THIS OUT  Sat Apr 15 15:45:41 2023 /andrew_bentzen
 	    List<Gun> playerGuns = other.GetComponent<PlayerController>().GetAllGuns();
 	    foreach (Gun gun in playerGuns) {
 		WeaponType currWeaponType = gun.GetWeaponType();
 		ammoAmont = GetAmmoAmount(currWeaponType);
 		if (currWeaponType == ammoPickupType) {
 		    Debug.Log(currWeaponType);
-		    if (gun.AmmoIsAtMax()) return;
-		    gun.IncrementAmmo(ammoAmont);
+		    Debug.Log("ammoAmont " + ammoAmont);
+		    if (PlayerAmmoController.instance.AmmoIsAtMax(currWeaponType)) return;
+		    PlayerAmmoController.instance.IncrementAmmo(currWeaponType, ammoAmont);
 		    Destroy(gameObject);
 		    isCollected = true;
 		    AudioManager.instance.PlaySFX(3);
 		    //break;
 		}
 	    }
+	    * CUT THIS OUT /andrew_bentzen */
+
+
 	}
     }
 

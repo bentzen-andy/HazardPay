@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour {
 
 
     private void Update() {
+
+	if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.L)) {
+	    Debug.Log("guns " + guns);
+	    Debug.Log("guns " + guns.Count);
+	    Debug.Log("collectedGuns " + collectedGuns);
+	    Debug.Log("collectedGuns " + collectedGuns.Count);
+	}
+
 	// Keep player from moving/shooting if is dead or game is paused
 	if (PlayerHealthController.instance.PlayerIsDead()) return;
 	if (GameManager.instance.isPaused) return;
@@ -115,6 +123,11 @@ public class PlayerController : MonoBehaviour {
 
     public Gun GetActiveGun() {
 	return activeGun;
+    }
+
+
+    public WeaponType GetActiveWeaponType() {
+	return activeGun.GetWeaponType();
     }
 
     

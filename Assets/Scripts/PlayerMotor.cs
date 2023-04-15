@@ -113,7 +113,7 @@ public class PlayerMotor : MonoBehaviour {
 	if (velocity != Vector3.zero) {
 	    //Debug.Log("rb.velocity.magnitude" +  rb.velocity.magnitude);
 	    //Debug.Log("velocity.magnitude  * Time.fixedDeltaTime" + velocity.magnitude  * Time.fixedDeltaTime);
-	    Debug.Log("rb.velocity.y" + rb.velocity.y);
+	    //Debug.Log("rb.velocity.y" + rb.velocity.y);
 	    
 	    rb.drag = groundDrag;
 	    
@@ -129,7 +129,7 @@ public class PlayerMotor : MonoBehaviour {
 
 	// correction force to make player fall faster
 	if (isFalling) {
-	    Debug.Log(isFalling);
+	    //Debug.Log(isFalling);
 	    Vector3 fallForce = new Vector3(rb.velocity.x, fallSpeed, rb.velocity.z);
 	    rb.AddForce(fallForce * Time.fixedDeltaTime, ForceMode.Acceleration);
 	}

@@ -28,7 +28,9 @@ public class WeaponPickup : MonoBehaviour {
 	foreach (Gun playerGun in playerCollectedGuns) {
 	    WeaponType currWeaponType = playerGun.GetWeaponType();
 	    if (currWeaponType == gunPickup.GetWeaponType()) {
-		playerGun.IncrementAmmo(playerGun.GetStartingAmmo());
+		PlayerAmmoController ammoController = PlayerAmmoController.instance;
+		int ammoCount = ammoController.GetStartingAmmo(currWeaponType);
+		ammoController.IncrementAmmo(currWeaponType, ammoCount);
 		return;
 	    }
 	}

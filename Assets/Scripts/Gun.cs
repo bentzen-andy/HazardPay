@@ -10,17 +10,17 @@ public class Gun : MonoBehaviour {
     [SerializeField] private Transform firePoint;
     [SerializeField] private bool canAutoFire;
     [SerializeField] private float timeBetweenShots;
-    [SerializeField] private int maxAmmo;
+    //[SerializeField] private int maxAmmo;
     [SerializeField] private WeaponType weaponType;
     [SerializeField] private float zoomAmount;
-    [SerializeField] private int startingAmmo;
+    //[SerializeField] private int startingAmmo;
     [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private float muzzleFlashTime = 0.025f;
 			 
     private bool muzzleFlashIsActive;
-    private int currentAmmo;
+    //private int currentAmmo;
     private float timeUntilReadyToFire;
-    private bool canFire => (timeUntilReadyToFire <= 0f && currentAmmo > 0);
+    private bool canFire => (timeUntilReadyToFire <= 0f && PlayerAmmoController.instance.GetActiveGunAmmo() > 0);
 
     public static Gun instance;
 
@@ -44,14 +44,14 @@ public class Gun : MonoBehaviour {
     void Start() {
 	instance = this;
 	//InitWeapon();
-        InitAmmo();
-	UpdateAmmoBarText();
+        //InitAmmo();
+	//PlayerAmmoController.instance.UpdateAmmoBarText();
 	//Debug.Log("init ammo count " + currentAmmo);
     }
 
 
     void OnEnable() {
-	UpdateAmmoBarText();
+	PlayerAmmoController.instance.UpdateAmmoBarText();
     }
 
 
@@ -60,22 +60,28 @@ public class Gun : MonoBehaviour {
     }
 
 
+    /* CUT THIS OUT  Sat Apr 15 14:44:05 2023 /andrew_bentzen
     public int GetStartingAmmo() {
 	return startingAmmo;
     }
+    * CUT THIS OUT /andrew_bentzen */
 
 
+    /* CUT THIS OUT  Sat Apr 15 14:51:09 2023 /andrew_bentzen
     public bool AmmoIsAtMax() {
 	return currentAmmo >= maxAmmo;
     }
+    * CUT THIS OUT /andrew_bentzen */
 
 
+    /* CUT THIS OUT  Sat Apr 15 14:57:52 2023 /andrew_bentzen
     public void IncrementAmmo(int numRounds) {
 	//Debug.Log("numRounds " + numRounds);
 	currentAmmo += numRounds;
 	currentAmmo = Mathf.Min(currentAmmo, maxAmmo);
 	UpdateAmmoBarText();
     }
+    * CUT THIS OUT /andrew_bentzen */
 
 
     public void ShootSingleRound(Camera playerCamera) {
@@ -97,6 +103,7 @@ public class Gun : MonoBehaviour {
     }
 
 
+    /* CUT THIS OUT  Sat Apr 15 14:34:35 2023 /andrew_bentzen
     private void InitAmmo() {
 	//Debug.Log(weaponType);
 	int result = 0;
@@ -108,6 +115,7 @@ public class Gun : MonoBehaviour {
 
 	currentAmmo = result;
     }
+    * CUT THIS OUT /andrew_bentzen */
 
 
     /* CUT THIS OUT  Mon Apr  3 16:22:30 2023 /andrew_bentzen
@@ -125,9 +133,9 @@ public class Gun : MonoBehaviour {
 	// Fire a round
 	Instantiate(projectile, firePoint.position, firePoint.rotation);
 	//Debug.Log("Shooting a round----5");
-	currentAmmo -= 1;
-	currentAmmo = Mathf.Max(currentAmmo, 0);
-	UpdateAmmoBarText();
+	//currentAmmo -= 1;
+
+	PlayerAmmoController.instance.DecrementAmmo(weaponType, 1);
 
 	// Muzzle flash
 	StartCoroutine(MuzzelFlash(muzzleFlashTime));
@@ -148,20 +156,6 @@ public class Gun : MonoBehaviour {
 	}
     }
 
-
-    private void UpdateAmmoBarText() {
-	// Don't update the UI text unless the change pertains to the players current weapon.
-	PlayerController pcInstance = PlayerController.instance;
-	if (pcInstance == null) return;
-	Gun activeGun = pcInstance.GetActiveGun();
-	if (activeGun == null) return;
-	WeaponType activeWeaponType = activeGun.GetWeaponType();
-	if (activeWeaponType != weaponType) return;
-
-	//if (weaponType != PlayerController.instance.GetActiveGun().GetWeaponType()) return;
-	int ammo = Mathf.Max(currentAmmo, 0);
-	UIController.instance.ammoText.text = $"AMMO: {ammo}/{maxAmmo}";
-    }
 
 
     public float GetZoom() {

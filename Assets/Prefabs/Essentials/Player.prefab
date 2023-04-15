@@ -691,10 +691,8 @@ MonoBehaviour:
   firePoint: {fileID: 2520298503359235697}
   canAutoFire: 1
   timeBetweenShots: 0.15
-  maxAmmo: 100
   weaponType: 1
   zoomAmount: 40
-  startingAmmo: 0
   muzzleFlash: {fileID: 2520298503909266686}
   muzzleFlashTime: 0.025
 --- !u!1 &2520298502834794681
@@ -1025,7 +1023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2520298502988780996
 Transform:
   m_ObjectHideFlags: 0
@@ -1059,10 +1057,8 @@ MonoBehaviour:
   firePoint: {fileID: 2520298502637732961}
   canAutoFire: 0
   timeBetweenShots: 0
-  maxAmmo: 100
   weaponType: 0
   zoomAmount: 50
-  startingAmmo: 0
   muzzleFlash: {fileID: 2520298504451944089}
   muzzleFlashTime: 0.025
 --- !u!1 &2520298503050204410
@@ -1580,10 +1576,8 @@ MonoBehaviour:
   firePoint: {fileID: 2520298502911838228}
   canAutoFire: 0
   timeBetweenShots: 1.5
-  maxAmmo: 30
   weaponType: 2
   zoomAmount: 20
-  startingAmmo: 0
   muzzleFlash: {fileID: 2520298502744580663}
   muzzleFlashTime: 0.025
 --- !u!1 &2520298503835935305
@@ -1730,7 +1724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2520298503882161641
 Transform:
   m_ObjectHideFlags: 0
@@ -1764,10 +1758,8 @@ MonoBehaviour:
   firePoint: {fileID: 2520298502417563108}
   canAutoFire: 0
   timeBetweenShots: 2
-  maxAmmo: 30
   weaponType: 3
   zoomAmount: 40
-  startingAmmo: 0
   muzzleFlash: {fileID: 2520298502551929178}
   muzzleFlashTime: 0.025
 --- !u!1 &2520298503909266686
@@ -1818,6 +1810,7 @@ GameObject:
   - component: {fileID: 2520298503933806623}
   - component: {fileID: 2520298503933806611}
   - component: {fileID: 2520298503933806608}
+  - component: {fileID: 3177806141075143478}
   - component: {fileID: 2520298503933806615}
   m_Layer: 0
   m_Name: Player
@@ -1911,6 +1904,9 @@ MonoBehaviour:
   cam: {fileID: 2520298504458438353}
   cameraRotationLimit: 85
   zoomSpeed: 8
+  groundDrag: 4
+  fallSpeed: -4000
+  maxSpeed: 8
 --- !u!114 &2520298503933806611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1928,8 +1924,8 @@ MonoBehaviour:
   lookSensitivity: 2
   lookSensitivityNormal: 2
   lookSensitivitySniper: 0.5
-  jumpForce: 5000
-  bounceForce: 8000
+  jumpForce: 20000
+  bounceForce: 40000
   groundCheckPoint: {fileID: 2520298502725722773}
   whatIsGround:
     serializedVersion: 2
@@ -1962,6 +1958,30 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 1000
   invincibleTime: 0.5
+--- !u!114 &3177806141075143478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2520298503933806617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d0eb9491a895844a3b8c77535daaf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pistolAmmo: 0
+  repeaterAmmo: 0
+  sniperAmmo: 0
+  rocketAmmo: 0
+  pistolAmmoMax: 100
+  repeaterAmmoMax: 200
+  sniperAmmoMax: 40
+  rocketAmmoMax: 20
+  pistolAmmoStarting: 30
+  repeaterAmmoStarting: 50
+  sniperAmmoStarting: 10
+  rocketAmmoStarting: 2
 --- !u!82 &2520298503933806615
 AudioSource:
   m_ObjectHideFlags: 0
