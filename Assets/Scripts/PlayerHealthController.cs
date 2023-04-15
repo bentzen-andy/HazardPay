@@ -18,7 +18,7 @@ public class PlayerHealthController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         instance = this;
-	currentHealth = maxHealth;
+	InitHealth();
 	UIController.instance.healthSlider.maxValue = maxHealth;
 	UpdateHealthBarText();
 
@@ -27,6 +27,12 @@ public class PlayerHealthController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
     }
+
+
+    public int GetCurrentHealth() {
+	return currentHealth;
+    }
+
 
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
@@ -77,14 +83,23 @@ public class PlayerHealthController : MonoBehaviour {
         isInvincible = false;
     }
 
+
     private void UpdateHealthBarText() {
 	int health = Mathf.Max(currentHealth, 0);
 	UIController.instance.healthSlider.value = health;
 	UIController.instance.healthText.text = $"HEALTH: {health}/{maxHealth}";
     }
 
+
     public bool PlayerIsDead() {
 	return isDead;
+    }
+
+
+    private void InitHealth() {
+	currentHealth = maxHealth;
+	string startingHealth = PlayerPrefs.GetString("playerHealth");
+	if (!string.IsNullOrWhiteSpace(startingHealth)) int.TryParse(startingHealth, out currentHealth);
     }
 
 }

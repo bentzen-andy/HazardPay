@@ -38,6 +38,17 @@ public class PlayerAmmoController : MonoBehaviour {
 	repeaterAmmo = repeaterAmmoStarting;
 	sniperAmmo = sniperAmmoStarting;
 	rocketAmmo = rocketAmmoStarting;
+
+	string pistolString = PlayerPrefs.GetString("pistolAmmo");
+	string repeaterString = PlayerPrefs.GetString("repeaterAmmo");
+	string sniperString = PlayerPrefs.GetString("sniperAmmo");
+	string rocketString = PlayerPrefs.GetString("rocketAmmo");
+
+
+	if (!string.IsNullOrWhiteSpace(pistolString)) int.TryParse(pistolString, out pistolAmmo);
+	if (!string.IsNullOrWhiteSpace(repeaterString)) int.TryParse(repeaterString, out repeaterAmmo);
+	if (!string.IsNullOrWhiteSpace(sniperString)) int.TryParse(sniperString, out sniperAmmo);
+	if (!string.IsNullOrWhiteSpace(rocketString)) int.TryParse(rocketString, out rocketAmmo);
     }
 
 

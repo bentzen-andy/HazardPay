@@ -564,6 +564,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelPack
       objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726691, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: speed
+      value: 8000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726691, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: runSpeed
+      value: 12000
+      objectReference: {fileID: 0}
     - target: {fileID: 6043636529597726700, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.51

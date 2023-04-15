@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
-	InitGun();
+	InitGuns();
 	//gunHolder.position = gunPointNormal.position;
     }
 
@@ -148,12 +148,46 @@ public class PlayerController : MonoBehaviour {
     * CUT THIS OUT /andrew_bentzen */
 
 
-    private void InitGun() {
-	// initialize all guns
+    private void InitGuns() {
+	string pistolString = PlayerPrefs.GetString("pistolGun");
+	string repeaterString = PlayerPrefs.GetString("repeaterGun");
+	string sniperString = PlayerPrefs.GetString("sniperGun");
+	string rocketString = PlayerPrefs.GetString("rocketGun");
+
+	if (!string.IsNullOrWhiteSpace(pistolString)) collectedGuns.Add(guns[0]);
+	if (!string.IsNullOrWhiteSpace(repeaterString)) collectedGuns.Add(guns[1]);
+	if (!string.IsNullOrWhiteSpace(sniperString)) collectedGuns.Add(guns[2]);
+	if (!string.IsNullOrWhiteSpace(rocketString)) collectedGuns.Add(guns[3]);
+
+	//if (string.IsNullOrWhiteSpace(pistolString) &&
+	    //string.IsNullOrWhiteSpace(repeaterString) &&
+	    //string.IsNullOrWhiteSpace(sniperString) &&
+	    //string.IsNullOrWhiteSpace(rocketString)) {
+	//}
+	//InitStartingPistol();
+
+	string _activeGun = PlayerPrefs.GetString("activeGun");
+	Debug.Log(_activeGun);
+	Debug.Log(!string.IsNullOrWhiteSpace(_activeGun));
+	Debug.Log(_activeGun.Equals("sniperGunActive"));
+	if (!string.IsNullOrWhiteSpace(_activeGun) && _activeGun.Equals("repeaterGunActive")) InitStartingGun(WeaponType.LaserRepeater);
+	else if (!string.IsNullOrWhiteSpace(_activeGun) && _activeGun.Equals("sniperGunActive")) InitStartingGun(WeaponType.LaserSniper);
+	else if (!string.IsNullOrWhiteSpace(_activeGun) && _activeGun.Equals("rocketGunActive")) InitStartingGun(WeaponType.RocketLauncher);
+	else InitStartingGun(WeaponType.LaserPistol);
+    }
+
+
+    private void InitStartingGun(WeaponType wt) {
+	Debug.Log("wt " + wt);
+
+	// initialize starting pistol
 	foreach (Gun gun in guns) {
 	    gun.gameObject.SetActive(false);
 	}
-	SwapGun(0);
+	if (wt == WeaponType.LaserPistol) SwapGun(0);
+	else if (wt == WeaponType.LaserRepeater) SwapGun(1);
+	else if (wt == WeaponType.LaserSniper) SwapGun(2);
+	else if (wt == WeaponType.RocketLauncher) SwapGun(3);
     }
 
 
