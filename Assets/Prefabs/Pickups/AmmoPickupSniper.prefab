@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: f392f143729c838499d9afa3bf8ff47e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b36f0a964cfffa64aa57bb46c5183aa5, type: 2}
     - target: {fileID: -927199367670048503, guid: f392f143729c838499d9afa3bf8ff47e, type: 3}
       propertyPath: m_Name
       value: ammo_pickup_sniper
