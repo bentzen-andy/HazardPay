@@ -8,6 +8,9 @@ public class PlayerMotor : MonoBehaviour {
     [SerializeField] private Camera cam;
     [SerializeField] private float cameraRotationLimit = 85f;
     [SerializeField] private float zoomSpeed = 4f;
+    [SerializeField] private float groundDrag = 5f;
+    [SerializeField] private float fallSpeed = 5f;
+    [SerializeField] private float maxSpeed = 10f;
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
@@ -17,6 +20,7 @@ public class PlayerMotor : MonoBehaviour {
     private float currentCameraRotationX = 0f;
     private Vector3 jumpForce = Vector3.zero;
     private Vector3 bounceForce = Vector3.zero;
+    private bool isFalling => (rb.velocity.y < -0.1f);
 
     private float startFOV;
     private float targetFOV;
@@ -81,6 +85,7 @@ public class PlayerMotor : MonoBehaviour {
     private void FixedUpdate() {
 	if (isFrozen) return;
         PerformMovement();
+        SpeedControl();
         PerformRotation();
         PerformZoom();
     }
@@ -90,7 +95,8 @@ public class PlayerMotor : MonoBehaviour {
     private void PerformMovement() {
         if (velocity != Vector3.zero) {
             // MovePosition will stop the rb from moving if something is in the way. 
-            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+            //rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+	    rb.AddForce(velocity * Time.fixedDeltaTime, ForceMode.Force);
         }
 
 	if (jumpForce != Vector3.zero) {
@@ -100,6 +106,34 @@ public class PlayerMotor : MonoBehaviour {
 	if (bounceForce != Vector3.zero) {
 	    rb.AddForce(bounceForce * Time.fixedDeltaTime, ForceMode.Acceleration);
 	}
+    }
+
+    
+    private void SpeedControl() {
+	if (velocity != Vector3.zero) {
+	    //Debug.Log("rb.velocity.magnitude" +  rb.velocity.magnitude);
+	    //Debug.Log("velocity.magnitude  * Time.fixedDeltaTime" + velocity.magnitude  * Time.fixedDeltaTime);
+	    Debug.Log("rb.velocity.y" + rb.velocity.y);
+	    
+	    rb.drag = groundDrag;
+	    
+	    // limit velocity in needed
+	    Vector3 currFlatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+	    //float maxVelocity = velocity.magnitude;
+	    if (currFlatVelocity.magnitude > maxSpeed) {
+		Vector3 limitedVelocity = currFlatVelocity.normalized * maxSpeed;
+		rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+	    }
+	    
+	}
+
+	// correction force to make player fall faster
+	if (isFalling) {
+	    Debug.Log(isFalling);
+	    Vector3 fallForce = new Vector3(rb.velocity.x, fallSpeed, rb.velocity.z);
+	    rb.AddForce(fallForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+	}
+	
     }
 
 
