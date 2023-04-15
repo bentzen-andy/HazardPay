@@ -2692,6 +2692,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelPack
       objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726691, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: speed
+      value: 8000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726691, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: runSpeed
+      value: 12000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726691, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: jumpForce
+      value: 20000
+      objectReference: {fileID: 0}
     - target: {fileID: 6043636529597726700, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.51
@@ -2711,6 +2723,26 @@ PrefabInstance:
     - target: {fileID: 6043636529597726700, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 9.866
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726702, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726702, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726703, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: maxSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726703, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: fallSpeed
+      value: -800
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529597726703, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: groundDrag
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6043636529858540604, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5444,6 +5476,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1081567999}
     m_Modifications:
+    - target: {fileID: 1552531683506764911, guid: 21623bff6ec8a904cabd56ee68c15f8c, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1552531684102158475, guid: 21623bff6ec8a904cabd56ee68c15f8c, type: 3}
       propertyPath: m_Name
       value: buildingCorridor_4
