@@ -5,7 +5,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour {
 
     [SerializeField] private GameObject projectile;
-    [SerializeField] private float rangeToTargetPlayer = 0.5f;
+    [SerializeField] private float rangeToTargetPlayer = 30f;
     [SerializeField] private float timeBetweenShots = 0.5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private Transform gun;
@@ -18,6 +18,8 @@ public class Turret : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+	//Debug.Log(PlayerIsInLineOfSight());
+
 	if (PlayerIsWithinRange()) {
 	    Shoot();
 	} else {
@@ -33,10 +35,31 @@ public class Turret : MonoBehaviour {
     }
 
 
+    private bool PlayerIsInLineOfSight() {
+	// Check if the player is in the enemy's line of sight
+	bool playerIsInLineOfSight = false;
+	RaycastHit hit;
+	if (Physics.Raycast(firePoint1.position, firePoint1.forward, out hit, rangeToTargetPlayer) &&
+	    hit.collider.gameObject == PlayerController.instance.gameObject) {
+	    transform.LookAt(hit.point);
+	    playerIsInLineOfSight = true;
+	}
+
+	if (Physics.Raycast(firePoint2.position, firePoint2.forward, out hit, rangeToTargetPlayer) &&
+	    hit.collider.gameObject == PlayerController.instance.gameObject) {
+	    transform.LookAt(hit.point);
+	    playerIsInLineOfSight = true;
+	}
+
+	return playerIsInLineOfSight;
+    }
+
+
     private void Shoot() {
 	if (GameManager.instance.levelIsEnding) return;
 
 	gun.LookAt(PlayerController.instance.transform.position);
+	if (!PlayerIsInLineOfSight()) return;
 	shotCounter -= Time.deltaTime;
 	ShootBarrel1();
 	ShootBarrel2();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyHealthController : MonoBehaviour {
 
+    [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth = 100;
     public Collider head;
     public Collider body;
@@ -36,5 +37,10 @@ public class EnemyHealthController : MonoBehaviour {
 
 	AudioManager.instance.PlaySFX(2);
 	Destroy(gameObject);
+    }
+
+
+    public bool EnemyDidTakeDamage() {
+	return currentHealth < maxHealth;
     }
 }

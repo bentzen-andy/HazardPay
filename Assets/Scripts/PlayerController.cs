@@ -223,9 +223,7 @@ public class PlayerController : MonoBehaviour {
 	      res = SwapGun((currGunNumber + 1) % guns.Count);
 	      currGunNumber++;
 	    }
-	}
-
-	else if (Input.mouseScrollDelta.y == 1) {
+	} else if (Input.mouseScrollDelta.y == 1) {
 	    SwapToNextGun();
 	} else if (Input.mouseScrollDelta.y == -1) {
 	    SwapToPrevGun();

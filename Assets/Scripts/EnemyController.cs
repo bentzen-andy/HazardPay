@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private float pauseTimeToShoot = 0.3f;
     [SerializeField] private float pauseTimeToReload = 6.0f;
     [SerializeField] private Animator anim;
+    [SerializeField] private EnemyHealthController enemyHealthController;
 
 
     private void Awake() {
@@ -78,7 +79,9 @@ public class EnemyController : MonoBehaviour {
 
     private void SetEnemyState(Vector3 playerPos, float distToPlayer, bool enemyDidShoot) {
 	// Set state based on distance from the player
-	if (isInCombat && distToPlayer > distanceToReturnToBase) isInCombat = false;
+	
+	if (enemyHealthController.EnemyDidTakeDamage()) isInCombat = true;
+	else if (isInCombat && distToPlayer > distanceToReturnToBase) isInCombat = false;
 	else if (!isInCombat && distToPlayer < distanceToChase) isInCombat = true;
 	else if (distToPlayer < distanceToFight) isStandingStill = true;
 	else if (distToPlayer > distanceToFight) isStandingStill = false;
