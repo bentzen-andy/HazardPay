@@ -311,6 +311,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6573263149241837780}
     m_Modifications:
+    - target: {fileID: 2520298503933806611, guid: 81267ca64d73a7d42b61254f11e13af2, type: 3}
+      propertyPath: lookSensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520298503933806611, guid: 81267ca64d73a7d42b61254f11e13af2, type: 3}
+      propertyPath: lookSensitivityNormal
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520298503933806611, guid: 81267ca64d73a7d42b61254f11e13af2, type: 3}
+      propertyPath: lookSensitivitySniper
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2520298503933806617, guid: 81267ca64d73a7d42b61254f11e13af2, type: 3}
       propertyPath: m_Name
       value: Player
