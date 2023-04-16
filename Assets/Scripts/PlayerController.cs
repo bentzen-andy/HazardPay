@@ -224,7 +224,59 @@ public class PlayerController : MonoBehaviour {
 	      currGunNumber++;
 	    }
 	}
+
+	else if (Input.mouseScrollDelta.y == 1) {
+	    SwapToNextGun();
+	} else if (Input.mouseScrollDelta.y == -1) {
+	    SwapToPrevGun();
+	}
     }
+
+
+    private void SwapToPrevGun() {
+	int currGunNumber = guns.IndexOf(activeGun);
+	foreach (Gun gun in guns) {
+	    if (currGunNumber < 0) return;
+	    if (SwapGun(--currGunNumber)) return;
+	}
+    }
+
+
+    private void SwapToNextGun() {
+	int currGunNumber = guns.IndexOf(activeGun);
+	foreach (Gun gun in guns) {
+	    if (currGunNumber > guns.Count - 1) return;
+	    if (SwapGun(++currGunNumber)) return;
+	}
+    }
+
+
+    /* CUT THIS OUT  Sat Apr 15 20:01:31 2023 /andrew_bentzen
+    private void SwapToPrevGun() {
+	int currGunNumber = guns.IndexOf(activeGun);
+	bool res = SwapGun(--currGunNumber % (guns.Count - 1));
+	int i = 0;
+	while (!res) {
+	    if (currGunNumber < 0) break;
+	    if (i > guns.Count - 1) break;
+	    res = SwapGun(--currGunNumber % (guns.Count - 1));
+	    i++;
+	}
+    }
+
+
+    private void SwapToNextGun() {
+	int currGunNumber = guns.IndexOf(activeGun);
+	bool res = SwapGun(++currGunNumber % (guns.Count - 1));
+	int i = 0;
+	while (!res) {
+	    if (currGunNumber < 0) break;
+	    if (i > guns.Count - 1) break;
+	    res = SwapGun(++currGunNumber % (guns.Count - 1));
+	    i++;
+	}
+    }
+    * CUT THIS OUT /andrew_bentzen */
 
 
     public bool SwapGun(int newGunIndex) {
