@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: bf4e3c9c021d81d48a931cf663100364
   - enabled: 1
-    path: Assets/Scenes/GameComplete.unity
-    guid: 990594526452c044592fc86ea1c47a6b
+    path: Assets/Scenes/Warehouse.unity
+    guid: 78398abc24f4821488e919868a28bc80
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Canyon.unity
     guid: 5783ab4bfebd19642a234e7c3f1a892f
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
+    path: Assets/Scenes/Multiplex.unity
     guid: c52937cd6806ddc46b9f18d58d570007
+  - enabled: 1
+    path: Assets/Scenes/GameComplete.unity
+    guid: 990594526452c044592fc86ea1c47a6b
   m_configObjects: {}
