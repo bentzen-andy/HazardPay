@@ -22,6 +22,7 @@ public class CheckpointController : MonoBehaviour {
     void Update() {
 	if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.L)) {
 	    PlayerPrefs.SetString(checkpointKey, "");
+	    //PlayerPrefs.DeleteAll();
 	}
     }
 

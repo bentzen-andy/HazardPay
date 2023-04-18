@@ -133,7 +133,7 @@ MonoBehaviour:
   rb: {fileID: 2259971543493857882}
   lifetime: 5
   impactEffect: {fileID: 5005980263764266902, guid: 4d584f3124018914eb12f256cf43b136, type: 3}
-  baseBulletDamage: 20
+  baseBulletDamage: 7
   allowedToDamagePlayer: 1
   allowedToDamageEnemy: 0
 --- !u!96 &4111466795396912092
