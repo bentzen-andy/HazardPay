@@ -1919,8 +1919,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb799181c42576c43b4172d8ca788946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 800
-  runSpeed: 1200
+  speed: 2000
+  runSpeed: 12000
   lookSensitivity: 2
   lookSensitivityNormal: 2
   lookSensitivitySniper: 0.5

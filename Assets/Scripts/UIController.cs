@@ -53,6 +53,7 @@ public class UIController : MonoBehaviour {
 	// fade the screen in at the start of the level
 	float blackScreenAlpha;
 	float whiteScreenAlpha;
+
 	if (!GameManager.instance.levelIsEnding) {
 	    blackScreenAlpha = Mathf.MoveTowards(blackScreen.color.a, 0f, blackScreenFadeTime * Time.deltaTime);
 	    blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, blackScreenAlpha);
@@ -67,6 +68,7 @@ public class UIController : MonoBehaviour {
 	    whiteScreenAlpha = Mathf.MoveTowards(whiteScreen.color.a, 1f, whiteScreenFadeTime * Time.deltaTime);
 	    whiteScreen.color = new Color(whiteScreen.color.r, whiteScreen.color.g, whiteScreen.color.b, whiteScreenAlpha);
 	}
+
 
     }
 

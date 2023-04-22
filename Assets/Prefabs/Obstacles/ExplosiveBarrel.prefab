@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3946494009884848064}
   - component: {fileID: 2323085703480364686}
   - component: {fileID: 69876509197729059}
-  - component: {fileID: 1323276482466235990}
   m_Layer: 0
   m_Name: ExplosiveBarrel
   m_TagString: Enemy
@@ -128,22 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2a851ff91ae78489f39fca510b6a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 40
   impactEffect: {fileID: 6346656770585426576, guid: 8ebd0010fb9ae0742958dd65140eeb54, type: 3}
-  enemyHealthController: {fileID: 1323276482466235990}
---- !u!114 &1323276482466235990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3946494009812810636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a3f1035ae24d443b5bfc42505a33f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 20
-  currentHealth: 20
-  head: {fileID: 0}
-  body: {fileID: 2323085703480364686}

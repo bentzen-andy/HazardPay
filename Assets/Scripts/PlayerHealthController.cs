@@ -8,6 +8,7 @@ public class PlayerHealthController : MonoBehaviour {
     private bool isWaitingToRespawn;
     private bool isDead;
 
+    [SerializeField] private bool godMode;
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private float invincibleTime = 0.5f;
@@ -26,6 +27,10 @@ public class PlayerHealthController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+	if (currentHealth >= 0 && transform.position.y < -25) {
+	  StartCoroutine(PlayerDiesAndWaitToRespawn(2f));
+	}
+
     }
 
 
@@ -37,7 +42,8 @@ public class PlayerHealthController : MonoBehaviour {
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
 	if (GameManager.instance.levelIsEnding) return;
-	currentHealth -= damageAmount;
+
+	if (!godMode) currentHealth -= damageAmount;
 	currentHealth = Mathf.Max(currentHealth, 0);
 	UpdateHealthBarText();
 
