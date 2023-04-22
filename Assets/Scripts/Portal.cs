@@ -22,14 +22,14 @@ public class Portal : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-	if (newPortalPosition != null && GameManager.instance.numGoalsReached == 5) {
+	if (newPortalPosition != null && BossFight.instance.numGoalsReached == 5) {
 	    transform.position = newPortalPosition.position;
 	}
 
 					 
-	//Debug.Log("goals: " + GameManager.instance.numGoalsReached);
+	//Debug.Log("goals: " + BossFight.instance.numGoalsReached);
 	//Debug.Log("onlyShowPortalAfterGoal: " + onlyShowPortalAfterGoal);
-        //if (onlyShowPor/talAfterGoal && GameManager.instance.numGoalsReached == 5) {
+        //if (onlyShowPor/talAfterGoal && BossFight.instance.numGoalsReached == 5) {
 	    //gameObject.SetActive(true);
 	    //Debug.Log("Show the portal");
 	//}
@@ -41,8 +41,8 @@ public class Portal : MonoBehaviour {
 	if (warpTo == null) return;
 	if (other.tag == "Player" && !isWarping) {
 	    AudioManager.instance.PlaySFX(1);
-	    if (portalIsAtEndOfRoom) GameManager.instance.numGoalsReached++;
-	    Debug.Log("goals: " + GameManager.instance.numGoalsReached);
+	    if (portalIsAtEndOfRoom) BossFight.instance.numGoalsReached++;
+	    Debug.Log("goals: " + BossFight.instance.numGoalsReached);
 	    StartCoroutine(Warp(other));
 	    
 	    if (portalToBeDestoyedAfterWarp != null) {

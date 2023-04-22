@@ -2890,6 +2890,14 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: d4305f3e6073c2a4f948fb30ee94b41d, type: 3}
+    - target: {fileID: 6043636529656862143, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043636529678207512, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
+      propertyPath: timeBetweenShots
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6043636529858540604, guid: 5c3ab07d0aaa29f4cab20c44b528a844, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6425,7 +6433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9716819
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6433,7 +6441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.23629297
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6445,7 +6453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -27.336
       objectReference: {fileID: 0}
     - target: {fileID: 2760423221520760328, guid: 46271dc51dd1841488214542c7e1ec82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

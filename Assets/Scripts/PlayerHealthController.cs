@@ -39,6 +39,11 @@ public class PlayerHealthController : MonoBehaviour {
     }
 
 
+    public bool PlayerHasFullHealth() {
+	return currentHealth >= maxHealth;
+    }
+
+
     public void DamagePlayer(int damageAmount) {
 	if (isInvincible) return;
 	if (GameManager.instance.levelIsEnding) return;
@@ -46,7 +51,6 @@ public class PlayerHealthController : MonoBehaviour {
 	if (!godMode) currentHealth -= damageAmount;
 	currentHealth = Mathf.Max(currentHealth, 0);
 	UpdateHealthBarText();
-
 	UIController.instance.ShowDamage();
 	AudioManager.instance.PlaySFX(7);
 
@@ -106,6 +110,14 @@ public class PlayerHealthController : MonoBehaviour {
 	currentHealth = maxHealth;
 	string startingHealth = PlayerPrefs.GetString("playerHealth");
 	if (!string.IsNullOrWhiteSpace(startingHealth)) int.TryParse(startingHealth, out currentHealth);
+	
+	string godModeString = PlayerPrefs.GetString("godMode");
+	if (!string.IsNullOrWhiteSpace(godModeString)) {
+	    if (godModeString == "godModeYes") {
+		godMode = true;
+	    }
+	} else {
+	    godMode = false;
+	}
     }
-
 }

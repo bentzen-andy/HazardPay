@@ -50,7 +50,7 @@ public class CheckpointController : MonoBehaviour {
 
     private void spawnPlayerAtMostRecentCheckpoint() {
 	PlayerController.instance.transform.position = transform.position;
-	Debug.Log("player starting at " + checkpointName);
+	PlayerController.instance.transform.rotation = transform.rotation;
     }
 
 
@@ -90,6 +90,4 @@ public class CheckpointController : MonoBehaviour {
 	int playerHealth = PlayerHealthController.instance.GetCurrentHealth();
 	PlayerPrefs.SetString("playerHealth", $"{playerHealth}");
     }
-
-
 }

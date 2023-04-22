@@ -24,6 +24,13 @@ public class MainMenu : MonoBehaviour {
     }
 
 
+    public void PlayGameGodMode() {
+	PlayerPrefs.DeleteAll();
+	PlayerPrefs.SetString("godMode", "godModeYes");
+	SceneManager.LoadScene(firstLevel);
+    }
+
+
     public void QuitGame() {
 	Application.Quit();
 	Debug.Log("quitting game!!!");

@@ -11,6 +11,7 @@ public class HealthPickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 	if (other.tag == "Player" && !isCollected) {
+	    if (PlayerHealthController.instance.PlayerHasFullHealth()) return;
 	    isCollected = true;
 	    AudioManager.instance.PlaySFX(5);
 	    PlayerHealthController.instance.HealPlayer(healAmount);

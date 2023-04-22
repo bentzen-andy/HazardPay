@@ -7,14 +7,12 @@ public class GameManager : MonoBehaviour {
 
     public bool isPaused => (UIController.instance.pauseScreen.activeInHierarchy);
     public bool levelIsEnding;
-    public int numGoalsReached;
 
     public static GameManager instance;
     
 
     private void Awake() {
 	instance = this;
-	numGoalsReached = 0;
     }
 
     // Start is called before the first frame update

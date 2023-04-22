@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour {
     private bool playerIsInLineOfSight;
     private Vector3 spawnPos;
     private int numRoundsInMagazine = 0;
+    private bool isBoss;
 
     [SerializeField] private float distanceToFight = 5f;
     [SerializeField] private float distanceToChase = 10f;
@@ -29,6 +30,7 @@ public class EnemyController : MonoBehaviour {
 
     private void Awake() {
 	spawnPos = transform.position;
+	isBoss = gameObject.GetComponent<EnemyHealthController>().isBoss;
     }
 
 
@@ -46,7 +48,8 @@ public class EnemyController : MonoBehaviour {
 
 
     private void Move(Vector3 playerPos) {
-	if (isStandingStill) agent.destination = transform.position;
+	if (isBoss) agent.destination = transform.position;
+	else if (isStandingStill) agent.destination = transform.position;
 	else if (isInCombat) agent.destination = playerPos;
 	else agent.destination = spawnPos;
 	//if (!isTurning) TurnDirection(transform.forward, playerPos);

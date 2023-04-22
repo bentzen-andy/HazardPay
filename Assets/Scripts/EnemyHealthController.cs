@@ -6,6 +6,7 @@ public class EnemyHealthController : MonoBehaviour {
 
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth = 100;
+    public bool isBoss;
     public Collider head;
     public Collider body;
     
@@ -34,7 +35,7 @@ public class EnemyHealthController : MonoBehaviour {
 
 
     private void Death() {
-
+	if (isBoss) BossFight.instance.numBossesDefeated++;
 	AudioManager.instance.PlaySFX(2);
 	Destroy(gameObject);
     }
